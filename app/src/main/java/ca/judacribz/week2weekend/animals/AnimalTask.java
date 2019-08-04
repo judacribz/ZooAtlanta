@@ -2,21 +2,16 @@ package ca.judacribz.week2weekend.animals;
 
 import android.os.AsyncTask;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
-import ca.judacribz.week2weekend.models.Animal;
+import ca.judacribz.week2weekend.models.Category;
 
-public class AnimalTask extends AsyncTask<Void, Void, ArrayList<Animal>> {
+public class AnimalTask extends AsyncTask<Void, Void, ArrayList<Category>> {
 
     AnimalsListener animalsListener;
 
     public interface AnimalsListener {
-        void onAnimalsReceived(ArrayList<Animal> animals);
+        void onAnimalsReceived(ArrayList<Category> animals);
     }
 
     public void setAnimalsListener(AnimalsListener animalsListener) {
@@ -24,8 +19,8 @@ public class AnimalTask extends AsyncTask<Void, Void, ArrayList<Animal>> {
     }
 
     @Override
-    protected ArrayList<Animal> doInBackground(Void... voids) {
-        ArrayList<Animal> animals = new ArrayList<>();
+    protected ArrayList<Category> doInBackground(Void... voids) {
+        ArrayList<Category> animals = new ArrayList<>();
 //
 //        try {
 //
@@ -52,7 +47,7 @@ public class AnimalTask extends AsyncTask<Void, Void, ArrayList<Animal>> {
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Animal> categories) {
+    protected void onPostExecute(ArrayList<Category> categories) {
         if (!categories.isEmpty()) {
             animalsListener.onAnimalsReceived(categories);
         }

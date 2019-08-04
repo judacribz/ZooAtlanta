@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import ca.judacribz.week2weekend.models.Category;
 
-public class AnimalCategoryTask extends AsyncTask<Void, Void, ArrayList<Category>> {
+public class CategoryTask extends AsyncTask<Void, Void, ArrayList<Category>> {
 
     CategoriesListener categoriesListener;
 

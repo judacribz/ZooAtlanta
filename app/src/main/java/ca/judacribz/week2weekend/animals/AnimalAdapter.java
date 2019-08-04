@@ -1,19 +1,23 @@
 package ca.judacribz.week2weekend.animals;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 import ca.judacribz.week2weekend.R;
-import ca.judacribz.week2weekend.models.Animal;
+import ca.judacribz.week2weekend.models.Category;
 
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
-    ArrayList<Animal> animals;
+    ArrayList<Category> animals;
 
-    public AnimalAdapter(ArrayList<Animal> animals) {
+    public AnimalAdapter(ArrayList<Category> animals) {
         this.animals = animals;
     }
 
@@ -44,7 +48,23 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             super(itemView);
         }
 
-        public void setAnimalData(Animal animal) {
+        public void setAnimalData(Category animal) {
+        }
+
+
+        public Drawable urlImageToDrawable(String url, String srcName) {
+            Drawable drawable = null;
+
+            try {
+                drawable = Drawable.createFromStream(
+                        (InputStream) new URL(url).getContent(),
+                        srcName
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return drawable;
         }
     }
 }
