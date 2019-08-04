@@ -1,4 +1,4 @@
-package ca.judacribz.week2weekend;
+package ca.judacribz.week2weekend.homepage;
 
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
@@ -10,7 +10,7 @@ import org.jsoup.nodes.TextNode;
 import java.io.IOException;
 import java.util.List;
 
-public class ScheduleScrape extends AsyncTask<Void, Void, List<TextNode>> {
+public class ScheduleTask extends AsyncTask<Void, Void, List<TextNode>> {
 
     ScheduleListener scheduleListener;
 

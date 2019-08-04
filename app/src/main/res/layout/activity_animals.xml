@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Animals">
+    tools:context=".animals.Animals">
 
 </android.support.constraint.ConstraintLayout>

@@ -11,10 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Animals"/>
-        <activity android:name=".Categories" />
+        <activity android:name=".animals.Animals"/>
+        <activity android:name=".categories.Categories" />
         <activity
-            android:name=".Homepage">
+            android:name=".homepage.Homepage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW"/>

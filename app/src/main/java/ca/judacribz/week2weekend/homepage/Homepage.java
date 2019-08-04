@@ -1,9 +1,7 @@
-package ca.judacribz.week2weekend;
+package ca.judacribz.week2weekend.homepage;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,7 +10,9 @@ import org.jsoup.nodes.TextNode;
 import java.util.List;
 import java.util.Objects;
 
-public class Homepage extends AppCompatActivity implements ScheduleScrape.ScheduleListener {
+import ca.judacribz.week2weekend.R;
+
+public class Homepage extends AppCompatActivity implements ScheduleTask.ScheduleListener {
 
     public static final int DURATION_IMAGE_CHANGE = 9000;
     private static final int[] IMG_ID_ANIMALS = new int[]{
@@ -53,7 +53,7 @@ public class Homepage extends AppCompatActivity implements ScheduleScrape.Schedu
         setContentView(R.layout.activity_homepage);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        ScheduleScrape scheduleScrape = new ScheduleScrape();
+        ScheduleTask scheduleScrape = new ScheduleTask();
         scheduleScrape.setScheduleListener(this);
         scheduleScrape.execute();
 

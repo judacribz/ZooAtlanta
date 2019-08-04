@@ -1,4 +1,4 @@
-package ca.judacribz.week2weekend.adapters;
+package ca.judacribz.week2weekend.categories;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
