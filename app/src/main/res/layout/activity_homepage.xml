@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clHomepage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".Homepage">
+
+    <ImageView
+        android:id="@+id/ivBanner"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:contentDescription="@string/cnt_zoo_atlanta_banner"
+        android:padding="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/zoo_atlanta_banner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/ivBanner"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tvToday"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/today"
+        android:textColor="@color/colorZooAtlanta"
+        android:textSize="25sp"
+        android:fontFamily="@font/prompt"
+        app:layout_constraintBottom_toBottomOf="@id/tvViewSchedule"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvSchedule" />
+
+    <TextView
+        android:id="@+id/tvSchedule"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:fontFamily="@font/prompt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvToday"
+        app:layout_constraintTop_toBottomOf="@id/ivSeparator" />
+
+    <TextView
+        android:id="@+id/tvLastAdmin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:fontFamily="@font/prompt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvToday"
+        app:layout_constraintTop_toBottomOf="@id/tvSchedule" />
+
+    <TextView
+        android:id="@+id/tvViewSchedule"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:text="@string/view_schedule"
+        android:textColor="@color/colorHyperlink"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvToday"
+        app:layout_constraintTop_toBottomOf="@id/tvLastAdmin" />
+
+    <ImageView
+        android:id="@+id/ivSeparator2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvToday"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ivAnimalImages"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@android:color/black"
+        android:scaleType="centerCrop"
+        android:src="@drawable/elephant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivSeparator2"
+        android:contentDescription="@string/cnt_featured_animals" />
+
+
+    <TextView
+        android:id="@+id/tvAnimalHeadline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:fontFamily="@font/fjalla"
+        android:paddingTop="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/elephant"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/ivAnimalImages" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@android:color/black"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/btnTickets"
+        app:layout_constraintTop_toBottomOf="@id/tvAnimalHeadline">
+
+        <TextView
+            android:id="@+id/tvAnimalDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="9"
+            android:background="@android:color/black"
+            android:fontFamily="@font/prompt"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnLearnMore"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="4"
+            android:background="@drawable/btn_ripple"
+            android:elevation="2dp"
+            android:fontFamily="@font/prompt"
+            android:text="@string/learn_more"
+            android:textColor="@android:color/white"
+            android:translationZ="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAnimalHeadline" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnCategories"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_ripple"
+        android:elevation="2dp"
+        android:fontFamily="@font/prompt"
+        android:text="@string/categories"
+        android:textColor="@android:color/white"
+        android:translationZ="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnAnimals"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_ripple"
+        android:elevation="2dp"
+        android:fontFamily="@font/prompt"
+        android:text="@string/animals"
+        android:textColor="@android:color/white"
+        android:translationZ="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnTickets"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_ripple_green"
+        android:elevation="2dp"
+        android:fontFamily="@font/prompt"
+        android:text="@string/tickets"
+        android:textColor="@android:color/white"
+        android:translationZ="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnAnimals"
+        app:layout_constraintStart_toEndOf="@id/btnCategories" />
+</android.support.constraint.ConstraintLayout>

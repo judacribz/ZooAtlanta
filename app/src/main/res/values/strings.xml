@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Week2Weekend</string>
+    <string name="number_of_species_here">Number of Species Here:</string>
+    <string name="description">Description</string>
+    <string name="cnt_zoo_atlanta_banner">Zoo Atlanta Banner</string>
+    <string name="zoo_atlanta_schedule">9:30 AM - 6:30 PM</string>
+    <string name="zoo_atlanta_last_admin">LAST ADMISSION 5:30 PM</string>
+    <string name="view_schedule">VIEW SCHEDULE</string>
+    <string name="today">Today</string>
+    <string name="animals">Animals</string>
+    <string name="categories">Categories</string>
+    <string name="gorilla">KEEP YOUR EYES PEELED FOR THE TINIEST MEMBER OF TAZ\'S GORILLA GROUP!</string>
+    <string name="panda">HERE\'S A STORY \.\.\. OF A LOVELY PANDA \.\.\. WHO GAVE BIRTH TO MANY TEENY-TINY CUBS!</string>
+    <string name="elephant">JOIN THE HERD TO TAKE A STAND FOR EARTH\'S LARGEST LIVING MAMMALS.</string>
+    <string name="zebra">THE ALL-NEW AFRICAN SAVANNA IS OPENING AUGUST 8!</string>
+
+    <string name="gorilla_desc">Lulu gave birth to her second offspring (and Taz’s 11th!) on July 24.</string>
+    <string name="panda_desc">Don’t miss out on our limited-time 2019 giant panda shirt featuring “The Panda Bunch.”</string>
+    <string name="elephant_desc">Discover why elephants are so important to their ecosystem, and find out how we can mitigate the threats they face.</string>
+    <string name="zebra_desc">This historic transformation will include new and significantly expanded habitats for elephants, giraffes, zebras and more.</string>
+
+    <string name="tickets">Tickets</string>
+    <string name="learn_more">Learn More</string>
+    <string name="cnt_featured_animals">Featured Animals</string>
 </resources>
