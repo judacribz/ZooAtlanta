@@ -1,7 +1,9 @@
 package ca.judacribz.week2weekend.homepage;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 import ca.judacribz.week2weekend.R;
+import ca.judacribz.week2weekend.categories.Categories;
 
 public class Homepage extends AppCompatActivity implements ScheduleTask.ScheduleListener {
 
@@ -33,7 +36,6 @@ public class Homepage extends AppCompatActivity implements ScheduleTask.Schedule
             R.string.panda_desc,
             R.string.zebra_desc
     };
-
     private static final int[] BTN_IDS = new int[]{
             R.id.btnCategories,
             R.id.btnTickets,
@@ -42,10 +44,10 @@ public class Homepage extends AppCompatActivity implements ScheduleTask.Schedule
 
     private ImageView ivAnimalImages;
     private TextView
-            tvAnimalHeadline,
-            tvAnimalDescription,
-            tvSchedule,
-            tvLastAdmin;
+        tvAnimalHeadline,
+        tvAnimalDescription,
+        tvSchedule,
+        tvLastAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +64,8 @@ public class Homepage extends AppCompatActivity implements ScheduleTask.Schedule
         ivAnimalImages = findViewById(R.id.ivAnimalImages);
         tvAnimalHeadline = findViewById(R.id.tvAnimalHeadline);
         tvAnimalDescription = findViewById(R.id.tvAnimalDescription);
-        tvSchedule = findViewById(R.id.tvSchedule);
         tvLastAdmin = findViewById(R.id.tvLastAdmin);
+        tvSchedule = findViewById(R.id.tvSchedule);
     }
 
     private void setButtonWidthEqually(int btnWidth) {
@@ -84,7 +86,9 @@ public class Homepage extends AppCompatActivity implements ScheduleTask.Schedule
                         ivAnimalImages.setImageResource(IMG_ID_ANIMALS[i]);
                         tvAnimalHeadline.setText(getResources().getString(STR_ID_HEAD_ANIMALS[i]));
                         tvAnimalDescription.setText(getResources().getString(STR_ID_DESC_ANIMALS[i]));
+
                         i = (i + 1) % numImages;
+
                         ivAnimalImages.postDelayed(this, DURATION_IMAGE_CHANGE);
                     }
                 }
@@ -95,5 +99,9 @@ public class Homepage extends AppCompatActivity implements ScheduleTask.Schedule
     public void onScheduleReceived(List<TextNode> schedule) {
         tvSchedule.setText(schedule.get(0).toString().trim());
         tvLastAdmin.setText(schedule.get(1).toString());
+    }
+
+    public void goToCategories(View view) {
+        startActivity(new Intent(this, Categories.class));
     }
 }

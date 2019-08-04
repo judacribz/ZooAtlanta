@@ -17,7 +17,7 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
 
     private Category category;
 
-    public CategoryAdapter(Context context, ArrayList<Category> categories) {
+    CategoryAdapter(Context context, ArrayList<Category> categories) {
         super(context, 0, categories);
     }
 

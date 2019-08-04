@@ -1,6 +1,6 @@
 package ca.judacribz.week2weekend.models;
 
-public class Category {
+public class Animal {
     String
         name,
         description;
