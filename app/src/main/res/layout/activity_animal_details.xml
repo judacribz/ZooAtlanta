@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".animal_details.AnimalDetails">
+
+    <ImageView
+        android:id="@+id/ivAnimalImage"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:contentDescription="@string/cnt_photo_of_animal"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAnimalName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/prompt"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="-2"
+        android:shadowDy="2"
+        android:shadowRadius="0.3"
+        android:textColor="@android:color/white"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/ivAnimalImage"
+        app:layout_constraintStart_toStartOf="@id/ivAnimalImage" />
+
+    <TextView
+        android:id="@+id/tvAnimalDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/fjalla"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/ivAnimalImage" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/rv_item_box"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAnimalDescription">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/desciptionScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/ibtnSound"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/btn_ripple"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="8dp"
+                android:onClick="makeAnimalSound"
+                android:src="@drawable/ic_sound"
+                android:contentDescription="@string/cnt_sound_image" />
+
+            <TextView
+                android:id="@+id/tvScientificNameLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/prompt"
+                android:text="@string/scientific_name"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvScientificName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prompt"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/tvScientificNameLabel"
+                app:layout_constraintStart_toStartOf="@id/tvScientificNameLabel"
+                app:layout_constraintTop_toBottomOf="@id/tvScientificNameLabel" />
+
+            <TextView
+                android:id="@+id/tvDietLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/prompt"
+                android:text="@string/diet"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvScientificName"
+                app:layout_constraintStart_toStartOf="@id/tvScientificName"
+                app:layout_constraintTop_toBottomOf="@id/tvScientificName" />
+
+            <TextView
+                android:id="@+id/tvDiet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prompt"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/tvDietLabel"
+                app:layout_constraintStart_toStartOf="@id/tvDietLabel"
+                app:layout_constraintTop_toBottomOf="@id/tvDietLabel" />
+
+            <TextView
+                android:id="@+id/tvStatusLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/prompt"
+                android:text="@string/status"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvDiet"
+                app:layout_constraintStart_toStartOf="@id/tvDiet"
+                app:layout_constraintTop_toBottomOf="@id/tvDiet" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prompt"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/tvStatusLabel"
+                app:layout_constraintStart_toStartOf="@id/tvStatusLabel"
+                app:layout_constraintTop_toBottomOf="@id/tvStatusLabel" />
+
+            <TextView
+                android:id="@+id/tvRangeLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/prompt"
+                android:text="@string/range"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvStatus"
+                app:layout_constraintStart_toStartOf="@id/tvStatus"
+                app:layout_constraintTop_toBottomOf="@id/tvStatus" />
+
+            <TextView
+                android:id="@+id/tvRange"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prompt"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/tvRangeLabel"
+                app:layout_constraintStart_toStartOf="@id/tvRangeLabel"
+                app:layout_constraintTop_toBottomOf="@id/tvRangeLabel" />
+
+            <TextView
+                android:id="@+id/tvHabitatLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/prompt"
+                android:text="@string/habitat"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvRange"
+                app:layout_constraintStart_toStartOf="@id/tvRange"
+                app:layout_constraintTop_toBottomOf="@id/tvRange" />
+
+            <TextView
+                android:id="@+id/tvHabitat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prompt"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/tvHabitatLabel"
+                app:layout_constraintStart_toStartOf="@id/tvHabitatLabel"
+                app:layout_constraintTop_toBottomOf="@id/tvHabitatLabel" />
+
+            <TextView
+                android:id="@+id/tvViewingHintsLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/prompt"
+                android:text="@string/viewing_hints"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tvHabitat"
+                app:layout_constraintStart_toStartOf="@id/tvHabitat"
+                app:layout_constraintTop_toBottomOf="@id/tvHabitat" />
+
+            <TextView
+                android:id="@+id/tvViewingHints"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/prompt"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/tvViewingHintsLabel"
+                app:layout_constraintStart_toStartOf="@id/tvViewingHintsLabel"
+                app:layout_constraintTop_toBottomOf="@id/tvViewingHintsLabel" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.constraint.ConstraintLayout>

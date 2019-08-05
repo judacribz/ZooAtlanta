@@ -2,9 +2,11 @@ package ca.judacribz.week2weekend.animals;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ca.judacribz.week2weekend.R;
+import ca.judacribz.week2weekend.animal_details.AnimalDetails;
 import ca.judacribz.week2weekend.models.Animal;
 import ca.judacribz.week2weekend.models.Category;
 
@@ -54,7 +58,10 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         return animals.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public static final String EXTRA_ANIMAL =
+                "ca.judacribz.week2weekend.animals.EXTRA_ANIMAL";
+
         TextView
                 tvAnimalName,
                 tvScientificName,
@@ -64,7 +71,11 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
         ImageView ivAnimalImage;
 
-        ViewHolder(@NonNull View itemView) {
+        Animal animal;
+        Bitmap bmp;
+        String aniName;
+
+        ViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             tvAnimalName = itemView.findViewById(R.id.tvAnimalName);
@@ -74,18 +85,30 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             tvRange = itemView.findViewById(R.id.tvRange);
 
             ivAnimalImage = itemView.findViewById(R.id.ivAnimalImage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), AnimalDetails.class);
+                    Bundle bundle = new Bundle();
+
+                    bundle.putParcelable(EXTRA_ANIMAL, animal);
+                    intent.putExtras(bundle);
+
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
 
-        int pos;
-        Bitmap bmp;
-        String aniName;
+
         void setAnimalData(final Animal animal) {
+            this.animal = animal;
             tvAnimalName.setText(aniName = animal.getName());
             tvScientificName.setText(animal.getScientificName());
             tvDiet.setText(animal.getDiet());
             tvStatus.setText(animal.getStatus());
             tvRange.setText(animal.getRange());
-            pos = animals.indexOf(animal);
 
             if (animalBmps.containsKey(aniName)) {
                 setAnimalImage(animalBmps.get(aniName));

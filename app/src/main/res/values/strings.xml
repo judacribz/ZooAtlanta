@@ -26,4 +26,9 @@
     <string name="diet">Diet</string>
     <string name="status">Status</string>
     <string name="range">Range</string>
+    <string name="scientific_name">Scientific Name</string>
+    <string name="viewing_hints">Viewing Hints</string>
+    <string name="habitat">Habitat</string>
+    <string name="cnt_sound_image">Sound Image</string>
+    <string name="category_file">category_file</string>
 </resources>
