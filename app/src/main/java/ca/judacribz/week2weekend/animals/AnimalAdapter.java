@@ -6,18 +6,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
 import ca.judacribz.week2weekend.R;
+import ca.judacribz.week2weekend.models.Animal;
 import ca.judacribz.week2weekend.models.Category;
 
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
-    ArrayList<Category> animals;
+    ArrayList<Animal> animals;
 
-    public AnimalAdapter(ArrayList<Category> animals) {
+    AnimalAdapter(ArrayList<Animal> animals) {
         this.animals = animals;
     }
 
@@ -25,7 +28,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.item_category,
+                R.layout.item_animal,
                 parent,
                 false
         ));
@@ -42,29 +45,32 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        TextView
+                tvAnimalName,
+                tvDiet,
+                tvStatus,
+                tvRange;
 
-
-        public ViewHolder(@NonNull View itemView) {
+        ImageView ivAnimalImage;
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            tvAnimalName = itemView.findViewById(R.id.tvAnimalName);
+                    tvDiet = itemView.findViewById(R.id.tvDiet);
+                    tvStatus = itemView.findViewById(R.id.tvStatus);
+                    tvRange =itemView.findViewById(R.id.tvRange);
+
+             ivAnimalImage = itemView.findViewById(R.id.ivAnimalImage);
+
         }
 
-        public void setAnimalData(Category animal) {
-        }
+        void setAnimalData(Animal animal) {
+            tvAnimalName.setText(animal.getName());
+            tvDiet.setText(animal.getDiet());
+            tvStatus.setText(animal.getStatus());
+            tvRange.setText(animal.getRange());
 
-
-        public Drawable urlImageToDrawable(String url, String srcName) {
-            Drawable drawable = null;
-
-            try {
-                drawable = Drawable.createFromStream(
-                        (InputStream) new URL(url).getContent(),
-                        srcName
-                );
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return drawable;
+            new DownloadImageTask(ivAnimalImage).execute(animal.getImgUrl());
         }
     }
 }

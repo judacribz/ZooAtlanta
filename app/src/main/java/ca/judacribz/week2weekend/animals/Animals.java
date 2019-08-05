@@ -2,26 +2,35 @@ package ca.judacribz.week2weekend.animals;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import ca.judacribz.week2weekend.R;
+import ca.judacribz.week2weekend.models.Animal;
 import ca.judacribz.week2weekend.models.Category;
 
 import static ca.judacribz.week2weekend.categories.Categories.EXTRA_CATEGORY_NAME;
 
 public class Animals extends AppCompatActivity implements AnimalTask.AnimalsListener {
 
+    RecyclerView rvAnimals;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animals);
-        Toast.makeText(this, "" + getIntent().getStringExtra(EXTRA_CATEGORY_NAME), Toast.LENGTH_SHORT).show();
+        rvAnimals = findViewById(R.id.rvAnimals);
+
+        new AnimalTask(this).execute(getIntent().getStringExtra(EXTRA_CATEGORY_NAME));
     }
 
     @Override
-    public void onAnimalsReceived(ArrayList<Category> animals) {
-
+    public void onAnimalsReceived(ArrayList<Animal> animals) {
+        AnimalAdapter animalAdapter = new AnimalAdapter(animals);
+        rvAnimals.setLayoutManager(new LinearLayoutManager(this));
+        rvAnimals.setAdapter(animalAdapter);
     }
 }

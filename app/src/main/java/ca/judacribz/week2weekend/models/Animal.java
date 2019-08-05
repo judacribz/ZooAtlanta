@@ -1,19 +1,29 @@
 package ca.judacribz.week2weekend.models;
 
-import java.util.ArrayList;
-
 public class Animal {
     String
             name,
             description,
             imgUrl,
+
             scientificName,
             diet,
             status,
-            viewingHints;
-    ArrayList<String>
+            viewingHints,
             range,
             habitat;
+
+    public Animal(String name,
+                  String scientificName, String diet, String status, String range, String imgUrl) {
+        this.name = name;
+        this.scientificName = scientificName;
+        this.diet = diet;
+        this.status = status;
+        this.range = range;
+this.imgUrl = imgUrl;
+
+    }
+
 
     public Animal(String name,
                   String description,
@@ -22,8 +32,8 @@ public class Animal {
                   String diet,
                   String status,
                   String viewingHints,
-                  ArrayList<String> range,
-                  ArrayList<String> habitat) {
+                  String range,
+                  String habitat) {
         this.name = name;
         this.description = description;
         this.imgUrl = imgUrl;
@@ -91,19 +101,19 @@ public class Animal {
         this.viewingHints = viewingHints;
     }
 
-    public ArrayList<String> getRange() {
+    public String getRange() {
         return range;
     }
 
-    public void setRange(ArrayList<String> range) {
+    public void setRange(String range) {
         this.range = range;
     }
 
-    public ArrayList<String> getHabitat() {
+    public String getHabitat() {
         return habitat;
     }
 
-    public void setHabitat(ArrayList<String> habitat) {
+    public void setHabitat(String habitat) {
         this.habitat = habitat;
     }
 }
