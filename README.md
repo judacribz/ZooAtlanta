@@ -3,15 +3,15 @@
 ## Research ##
 #### 1. What is the difference in recyclerView and listView? ####
 Major advantages RecyclerView has over ListView: </br>
-*used for scrolling list of elements for large data sets or data that changes frequently
+* used for scrolling list of elements for large data sets or data that changes frequently
 
 RecyclerView ViewHolder </br>
-*each view holder displays a single item with a view
-*only as many needed to disaplay on-screen plus a few extra to be ready when they are scrolled to
-*view holders that are off-screen the longest can be re-bound to new data
+* each view holder displays a single item with a view
+* only as many needed to disaplay on-screen plus a few extra to be ready when they are scrolled to
+* view holders that are off-screen the longest can be re-bound to new data
 
 LayoutManager </br>
-*allows us how to choose difference ways to display the list such as in a horizontal list or grid view which cant be done using ListView
+* allows us how to choose difference ways to display the list such as in a horizontal list or grid view which cant be done using ListView
 
 2. Define lazy loading. </br>
 3. What is an item decorator in RecyclerViews? </br>
