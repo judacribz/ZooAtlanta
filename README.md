@@ -2,10 +2,10 @@
 
 ## Screnshots ##
 <p float="left">
-  <img src="/screenshots/2019-08-05%2011.45.16.jpg" width="100" />
-  <img src="/screenshots/2019-08-05%2011.46.06.jpg" width="100" />
-  <img src="/screenshots/2019-08-05%2011.45.34.jpg" width="100" />
-  <img src="/screenshots/2019-08-05%2011.45.16.jpg" width="100" />
+  <img src="/screenshots/2019-08-05%2011.45.16.jpg" width="200" />
+  <img src="/screenshots/2019-08-05%2011.46.06.jpg" width="200" />
+  <img src="/screenshots/2019-08-05%2011.45.34.jpg" width="200" />
+  <img src="/screenshots/2019-08-05%2011.45.16.jpg" width="200" />
 </p>
 
 ## Research ##
