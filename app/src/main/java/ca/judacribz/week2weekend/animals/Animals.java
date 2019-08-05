@@ -20,6 +20,7 @@ import static ca.judacribz.week2weekend.categories.Categories.EXTRA_CATEGORY_NAM
 public class Animals extends AppCompatActivity implements AnimalTask.AnimalsListener {
 
     public static final String KEY_CATEGORY = "ca.judacribz.week2weekend.animals.KEY_CATEGORY";
+    public static final String ALL_ANIMALS = "All Animals";
     RecyclerView rvAnimals;
     String category;
 
@@ -28,7 +29,14 @@ public class Animals extends AppCompatActivity implements AnimalTask.AnimalsList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animals);
 
-        new AnimalTask(this).execute(category = getIntent().getStringExtra(EXTRA_CATEGORY_NAME));
+
+
+        category = getIntent().getStringExtra(EXTRA_CATEGORY_NAME);
+        if (category == null) {
+            category = ALL_ANIMALS;
+        }
+
+        new AnimalTask(this).execute(category);
         Objects.requireNonNull(getSupportActionBar()).setTitle(category.toUpperCase());
 
         rvAnimals = findViewById(R.id.rvAnimals);

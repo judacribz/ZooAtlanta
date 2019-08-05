@@ -15,6 +15,8 @@ import java.util.regex.Pattern;
 import ca.judacribz.week2weekend.models.Animal;
 import ca.judacribz.week2weekend.models.Category;
 
+import static ca.judacribz.week2weekend.animals.Animals.ALL_ANIMALS;
+
 public class AnimalTask extends AsyncTask<String, Void, ArrayList<Animal>> {
 
     private static final String
@@ -40,8 +42,10 @@ public class AnimalTask extends AsyncTask<String, Void, ArrayList<Animal>> {
 
         try {
             Document document = Jsoup.connect(
-                    "https://zooatlanta.org/animals/?wpvtypeofanimal%5B%5D=" +
-                            categoryName[0]
+                    (ALL_ANIMALS.equals(categoryName[0])) ?
+                            "https://zooatlanta.org/animals/" :
+                            "https://zooatlanta.org/animals/?wpvtypeofanimal%5B%5D=" +
+                                    categoryName[0]
             ).get();
 
             String styleStr;

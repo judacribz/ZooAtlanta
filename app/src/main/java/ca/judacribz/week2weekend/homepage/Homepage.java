@@ -13,7 +13,10 @@ import java.util.List;
 import java.util.Objects;
 
 import ca.judacribz.week2weekend.R;
+import ca.judacribz.week2weekend.animals.Animals;
 import ca.judacribz.week2weekend.categories.Categories;
+
+import static ca.judacribz.week2weekend.categories.Categories.EXTRA_CATEGORY_NAME;
 
 public class Homepage extends AppCompatActivity implements ScheduleTask.ScheduleListener {
 
@@ -103,5 +106,8 @@ public class Homepage extends AppCompatActivity implements ScheduleTask.Schedule
 
     public void goToCategories(View view) {
         startActivity(new Intent(this, Categories.class));
+    }
+    public void goToAnimals(View view) {
+        startActivity(new Intent(this, Animals.class));
     }
 }
