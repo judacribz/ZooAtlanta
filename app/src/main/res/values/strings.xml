@@ -23,7 +23,7 @@
     <string name="cnt_zoo_atlanta_banner">Zoo Atlanta Banner</string>
     <string name="animal_classifications">Animal Classifications</string>
     <string name="cnt_photo_of_animal">Photo of Animal</string>
-    <string name="diet">Diet: </string>
-    <string name="status">Status: </string>
+    <string name="diet">Diet</string>
+    <string name="status">Status</string>
     <string name="range">Range</string>
 </resources>

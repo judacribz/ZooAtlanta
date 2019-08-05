@@ -23,14 +23,13 @@ public class Animals extends AppCompatActivity implements AnimalTask.AnimalsList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animals);
         rvAnimals = findViewById(R.id.rvAnimals);
-
+        rvAnimals.setLayoutManager(new LinearLayoutManager(this));
         new AnimalTask(this).execute(getIntent().getStringExtra(EXTRA_CATEGORY_NAME));
     }
 
     @Override
     public void onAnimalsReceived(ArrayList<Animal> animals) {
-        AnimalAdapter animalAdapter = new AnimalAdapter(animals);
-        rvAnimals.setLayoutManager(new LinearLayoutManager(this));
+        AnimalAdapter animalAdapter = new AnimalAdapter(this, animals);
         rvAnimals.setAdapter(animalAdapter);
     }
 }
