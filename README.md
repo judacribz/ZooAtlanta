@@ -1,4 +1,4 @@
-# Homework Week Two Weekend #
+# Week Two Weekend - RecyclerView #
 
 ## Research ##
 #### 1. What is the difference in recyclerView and listView? ####
@@ -13,10 +13,22 @@ RecyclerView ViewHolder </br>
 LayoutManager </br>
 * allows us how to choose difference ways to display the list such as in a horizontal list or grid view which cant be done using ListView
 
-2. Define lazy loading. </br>
-3. What is an item decorator in RecyclerViews? </br>
-4. What is the View Holder Pattern? </br>
-5. How do you implement a item touch helper for the RecyclerView? </br>
+#### 2. Define lazy loading. ####
+* loading only enough content to show on the part of the screen that is shown
+* allows users to see content faster such as in RecyclerView instead of waiting for all the data to be loaded like ListView does
+
+#### 3. What is an item decorator in RecyclerViews? ####
+* allows special drawing and layout offset to specific item views from the dataset
+* useful for drawing dividers between items, highlights, visual grouping boundaries
+
+#### 4. What is the View Holder Pattern? ####
+* allows access to each list item view without the need to look up
+* avoids frequent calls to findViewById()
+
+#### 5. How do you implement a item touch helper for the RecyclerView? ####
+* used for swipe to dismiss and drag & drop
+* first create ItemTouchHelper.Callback which lets you control the touch event
+* it provides methods you can override and choose how to handle the touches
 
 ## Coding
 Create an app which is a directory for all the animals in a zoo. </br>
