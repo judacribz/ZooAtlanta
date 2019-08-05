@@ -1,7 +1,7 @@
 # Week Two Weekend - RecyclerView #
 
 ## Screnshots ##
-![Zoo Homepage](https://github.com/SherOn-Bala/Week2Weekend-RecyclerView/screenshots/2019-08-05 11.46.25.jpg "Zoo Homepage")
+![Zoo Homepage](https://github.com/SherOn-Bala/Week2Weekend-RecyclerView/blob/master/screenshots/2019-08-05%2011.45.16.jpg "Zoo Homepage")
 ![Zoo Animal Categories List](https://github.com/SherOn-Bala/Week2Weekend-RecyclerView/screenshots/2019-08-05 11.46.06.jpg "Categories ListView")
 ![Zoo Animal List](https://github.com/SherOn-Bala/Week2Weekend-RecyclerView/screenshots/2019-08-05 11.45.34.jpg "Animals RecyclerView")
 ![Animal Details](https://github.com/SherOn-Bala/Week2Weekend-RecyclerView/screenshots/2019-08-05 11.45.16.jpg "Animal Details")
