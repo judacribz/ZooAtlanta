@@ -1,5 +1,11 @@
 # Week Two Weekend - RecyclerView #
 
+## Screnshots ##
+![Zoo Homepage](/screenshots/2019-08-05 11.46.25.jpg?raw=true "Zoo Homepage")
+![Zoo Animal Categories List](/screenshots/2019-08-05 11.46.06.jpg?raw=true "Categories ListView")
+![Zoo Animal List](/screenshots/2019-08-05 11.45.34.jpg?raw=true "Animals RecyclerView")
+![Animal Details](/screenshots/2019-08-05 11.45.16.jpg?raw=true "Animal Details")
+
 ## Research ##
 #### 1. What is the difference in recyclerView and listView? ####
 Major advantages RecyclerView has over ListView: </br>
