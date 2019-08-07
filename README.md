@@ -40,7 +40,7 @@ LayoutManager </br>
 
 ## Coding
 #### Create an app which is a directory for all the animals in a zoo. </br> ####
-1. Activity one: Make a homepage for zoo information
-2. Activity two: ListView with list of all the animals
-3. Activity three: RecyclerView with a list of all the animals in that category
-4. Activity four: Detail of that animal selected from the list. It should have the detail of that animal and play a sound of that animal
+1. <b>Activity one:</b> Make a homepage for zoo information
+2. <b>Activity two:</b> ListView with list of all the animals
+3. <b>Activity three:</b> RecyclerView with a list of all the animals in that category
+4. <b>Activity four:</b> Detail of that animal selected from the list. It should have the detail of that animal and play a sound of that animal
