@@ -1,11 +1,12 @@
 package ca.judacribz.week2weekend.homepage;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.jsoup.nodes.TextNode;
 
@@ -15,8 +16,6 @@ import java.util.Objects;
 import ca.judacribz.week2weekend.R;
 import ca.judacribz.week2weekend.animals.Animals;
 import ca.judacribz.week2weekend.categories.Categories;
-
-import static ca.judacribz.week2weekend.categories.Categories.EXTRA_CATEGORY_NAME;
 
 public class Homepage extends AppCompatActivity implements ScheduleTask.ScheduleListener {
 
@@ -47,10 +46,10 @@ public class Homepage extends AppCompatActivity implements ScheduleTask.Schedule
 
     private ImageView ivAnimalImages;
     private TextView
-        tvAnimalHeadline,
-        tvAnimalDescription,
-        tvSchedule,
-        tvLastAdmin;
+            tvAnimalHeadline,
+            tvAnimalDescription,
+            tvSchedule,
+            tvLastAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +106,7 @@ public class Homepage extends AppCompatActivity implements ScheduleTask.Schedule
     public void goToCategories(View view) {
         startActivity(new Intent(this, Categories.class));
     }
+
     public void goToAnimals(View view) {
         startActivity(new Intent(this, Animals.class));
     }

@@ -1,22 +1,18 @@
 package ca.judacribz.week2weekend.animals;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,15 +21,12 @@ import java.util.Map;
 import ca.judacribz.week2weekend.R;
 import ca.judacribz.week2weekend.animal_details.AnimalDetails;
 import ca.judacribz.week2weekend.models.Animal;
-import ca.judacribz.week2weekend.models.Category;
 
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
     private ArrayList<Animal> animals;
     private Map<String, Bitmap> animalBmps;
-    private Activity context;
 
-    AnimalAdapter(Activity context, ArrayList<Animal> animals) {
-        this.context = context;
+    AnimalAdapter(ArrayList<Animal> animals) {
         this.animals = animals;
         animalBmps = new HashMap<>();
     }
