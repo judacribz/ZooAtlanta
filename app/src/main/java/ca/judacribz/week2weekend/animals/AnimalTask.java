@@ -67,14 +67,17 @@ public class AnimalTask extends AsyncTask<String, Void, ArrayList<Animal>> {
                         backCard.indexOf(DIET) + DIET.length(),
                         backCard.indexOf(STATUS)
                 );
-                status = backCard.substring(
-                        backCard.indexOf(STATUS) + STATUS.length(),
-                        backCard.indexOf(RANGE)
+
+                int beg = backCard.indexOf(STATUS) + STATUS.length();
+                int end = backCard.indexOf(RANGE);
+
+                status = (beg >= end) ? "" : backCard.substring(beg, end
                 );
-                range = backCard.substring(
-                        backCard.indexOf(RANGE) + RANGE.length(),
-                        backCard.indexOf(READ_MORE)
-                );
+
+                beg = backCard.indexOf(RANGE) + RANGE.length();
+                end = backCard.indexOf(READ_MORE);
+
+                range = (beg >= end) ? "" : backCard.substring(beg, end);
 
                 animals.add(new Animal(name, scientificName, diet, status, range, url));
             }
