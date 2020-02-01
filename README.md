@@ -1,4 +1,4 @@
-# Unofficial Zoo Atlanta Android App#
+# Unofficial Zoo Atlanta Android App #
 
 ## Screnshots ##
 <p float="left">
