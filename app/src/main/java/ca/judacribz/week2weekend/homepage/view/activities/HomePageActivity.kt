@@ -16,29 +16,31 @@ class HomePageActivity : AppCompatActivity() {
 
     companion object {
         private val IMG_ID_ANIMALS = intArrayOf(
-                R.drawable.elephant,
-                R.drawable.gorilla,
-                R.drawable.panda,
-                R.drawable.zebra
+            R.drawable.elephant,
+            R.drawable.gorilla,
+            R.drawable.panda,
+            R.drawable.zebra
         )
         private val STR_ID_HEAD_ANIMALS = intArrayOf(
-                R.string.elephant,
-                R.string.gorilla,
-                R.string.panda,
-                R.string.zebra
+            R.string.elephant,
+            R.string.gorilla,
+            R.string.panda,
+            R.string.zebra
         )
         private val STR_ID_DESC_ANIMALS = intArrayOf(
-                R.string.elephant_desc,
-                R.string.gorilla_desc,
-                R.string.panda_desc,
-                R.string.zebra_desc
+            R.string.elephant_desc,
+            R.string.gorilla_desc,
+            R.string.panda_desc,
+            R.string.zebra_desc
         )
         private val BTN_IDS = intArrayOf(
-                R.id.btnCategories,
-                R.id.btnTickets,
-                R.id.btnAnimals
+            R.id.btnCategories,
+            R.id.btnTickets,
+            R.id.btnAnimals
         )
     }
+
+    private lateinit var viewModel: HomePageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +48,16 @@ class HomePageActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         setButtonWidthEqually(resources.displayMetrics.widthPixels / 3)
+    }
 
+    override fun onStart() {
+        super.onStart()
         setUpViewModel()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.changeImgs = false
     }
 
     fun goToCategories(view: View?) {
@@ -59,21 +69,21 @@ class HomePageActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
-        ViewModelProvider(this).get(HomePageViewModel::class.java).apply {
-            setupImages(IMG_ID_ANIMALS.size)
-            retrieveSchedule()
+        viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
 
-            imgInd.observe(this@HomePageActivity, Observer { imgInd ->
-                ivAnimalImages.setImageResource(IMG_ID_ANIMALS[imgInd])
-                tvAnimalHeadline.text = getString(STR_ID_HEAD_ANIMALS[imgInd])
-                tvAnimalDescription.text = getString(STR_ID_DESC_ANIMALS[imgInd])
-            })
+        viewModel.setupImages(IMG_ID_ANIMALS.size)
+        viewModel.retrieveSchedule()
 
-            schedule.observe(this@HomePageActivity, Observer { schedule ->
-                tvSchedule.text = schedule.admissionTime
-                tvLastAdmin.text = schedule.lastAdmission
-            })
-        }
+        viewModel.imgInd.observe(this, Observer { imgInd ->
+            ivAnimalImages.setImageResource(IMG_ID_ANIMALS[imgInd])
+            tvAnimalHeadline.text = getString(STR_ID_HEAD_ANIMALS[imgInd])
+            tvAnimalDescription.text = getString(STR_ID_DESC_ANIMALS[imgInd])
+        })
+
+        viewModel.schedule.observe(this, Observer { schedule ->
+            tvSchedule.text = schedule.admissionTime
+            tvLastAdmin.text = schedule.lastAdmission
+        })
     }
 
     private fun setButtonWidthEqually(btnWidth: Int) {

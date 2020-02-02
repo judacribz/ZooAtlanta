@@ -2,20 +2,20 @@ package ca.judacribz.week2weekend.homepage.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import ca.judacribz.week2weekend.custom.BaseViewModel
 import ca.judacribz.week2weekend.homepage.model.Schedule
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.TextNode
 import java.io.IOException
 
-class HomePageViewModel : ViewModel() {
-
+class HomePageViewModel : BaseViewModel() {
     companion object {
-        private const val DURATION_IMAGE_CHANGE: Long = 9000
+        private const val DURATION_IMAGE_CHANGE: Long = 7000
+        private const val ITER_INDEX_BY = 1
     }
 
     private val _imgInd = MutableLiveData(0)
@@ -25,36 +25,38 @@ class HomePageViewModel : ViewModel() {
     val schedule: LiveData<Schedule>
         get() = _schedule
 
-    fun setupImages(numImgs: Int) = GlobalScope.launch(Dispatchers.IO) {
-        var index = 1
-        while (true) {
+    var changeImgs = true
+
+    fun setupImages(numImgs: Int) = bgDefaultScope.launch {
+        changeImgs = true
+        while (changeImgs) {
             delay(DURATION_IMAGE_CHANGE)
-            _imgInd.postValue(index)
-            index = (index + 1) % numImgs
+            _imgInd.postValue(_imgInd.value?.plus(ITER_INDEX_BY)?.rem(numImgs))
         }
     }
 
-    fun retrieveSchedule() = GlobalScope.launch(Dispatchers.IO) {
+    fun retrieveSchedule() = uiMainScope.launch {
         try {
-            val document = Jsoup.connect("https://zooatlanta.org/").get()
-            val scheduleNode = document
-                .getElementById("today")
-                .getElementById("hours-today")
-                .textNodes()
-                .subList(0, 2)
+            val document = withContext(Dispatchers.IO) {
+                Jsoup.connect("https://zooatlanta.org/").get()
+            }
+            val scheduleNode = withContext(Dispatchers.Default) {
+                document
+                    .getElementById("today")
+                    .getElementById("hours-today")
+                    .textNodes()
+                    .subList(0, 2)
+            }
             setSchedule(scheduleNode)
-
         } catch (e: IOException) {
             e.printStackTrace()
         }
     }
 
     private fun setSchedule(scheduleNode: List<TextNode>) {
-        _schedule.postValue(
-            Schedule(
-                scheduleNode[0].toString().trim(),
-                scheduleNode[1].toString().trim()
-            )
+        _schedule.value = Schedule(
+            scheduleNode[0].toString().trim(),
+            scheduleNode[1].toString().trim()
         )
     }
 }
