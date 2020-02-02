@@ -2,8 +2,8 @@ package ca.judacribz.week2weekend.models;
 
 public class Category {
     String
-        name,
-        description;
+            name,
+            description;
     int numSpecies;
 
     public Category(String name, String description, int numSpecies) {
