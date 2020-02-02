@@ -9,13 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import ca.judacribz.week2weekend.R
 import ca.judacribz.week2weekend.animals.Animals
 import ca.judacribz.week2weekend.categories.Categories
-import ca.judacribz.week2weekend.homepage.model.remote.asynctask.ScheduleTask
 import ca.judacribz.week2weekend.homepage.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.activity_homepage.*
-import org.jsoup.nodes.TextNode
 
-
-class HomePageActivity : AppCompatActivity(), ScheduleTask.Listener {
+class HomePageActivity : AppCompatActivity() {
 
     companion object {
         private val IMG_ID_ANIMALS = intArrayOf(
@@ -48,13 +45,9 @@ class HomePageActivity : AppCompatActivity(), ScheduleTask.Listener {
         setContentView(R.layout.activity_homepage)
         supportActionBar?.hide()
 
-        val scheduleScrape = ScheduleTask(this)
-        scheduleScrape.execute()
         setButtonWidthEqually(resources.displayMetrics.widthPixels / 3)
 
-
         setUpViewModel()
-
     }
 
     fun goToCategories(view: View?) {
@@ -68,11 +61,17 @@ class HomePageActivity : AppCompatActivity(), ScheduleTask.Listener {
     private fun setUpViewModel() {
         ViewModelProvider(this).get(HomePageViewModel::class.java).apply {
             setupImages(IMG_ID_ANIMALS.size)
+            retrieveSchedule()
 
             imgInd.observe(this@HomePageActivity, Observer { imgInd ->
                 ivAnimalImages.setImageResource(IMG_ID_ANIMALS[imgInd])
                 tvAnimalHeadline.text = getString(STR_ID_HEAD_ANIMALS[imgInd])
                 tvAnimalDescription.text = getString(STR_ID_DESC_ANIMALS[imgInd])
+            })
+
+            schedule.observe(this@HomePageActivity, Observer { schedule ->
+                tvSchedule.text = schedule.admissionTime
+                tvLastAdmin.text = schedule.lastAdmission
             })
         }
     }
@@ -81,10 +80,5 @@ class HomePageActivity : AppCompatActivity(), ScheduleTask.Listener {
         for (btnId in BTN_IDS) {
             findViewById<View>(btnId).layoutParams.width = btnWidth
         }
-    }
-
-    override fun onScheduleReceived(schedule: List<TextNode?>?) {
-        tvSchedule.text = schedule!![0].toString().trim()
-        tvLastAdmin.text = schedule[1].toString()
     }
 }
