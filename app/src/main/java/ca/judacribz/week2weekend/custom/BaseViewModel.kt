@@ -7,10 +7,11 @@ import kotlinx.coroutines.Job
 
 open class BaseViewModel : ViewModel() {
 
-    private val job = Job()
-    val uiMainScope = CoroutineScope(Dispatchers.Main + job)
-    val bgIOScope = CoroutineScope(Dispatchers.IO + job)
-    val bgDefaultScope = CoroutineScope(Dispatchers.Default + job)
+    private val job by lazyOf(Job())
+
+    val uiMainScope = CoroutineScope(job + Dispatchers.Main)
+    val bgIOScope = CoroutineScope(job + Dispatchers.IO)
+    val bgDefaultScope = CoroutineScope(job + Dispatchers.Default)
 
     override fun onCleared() {
         super.onCleared()

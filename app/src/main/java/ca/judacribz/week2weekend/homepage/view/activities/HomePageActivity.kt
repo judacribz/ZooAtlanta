@@ -47,34 +47,35 @@ class HomePageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_homepage)
         supportActionBar?.hide()
 
-        setButtonWidthEqually(resources.displayMetrics.widthPixels / 3)
-    }
-
-    override fun onStart() {
-        super.onStart()
         setUpViewModel()
     }
 
-    override fun onStop() {
-        super.onStop()
-        viewModel.changeImgs = false
+    override fun onResume() {
+        super.onResume()
+        if (::viewModel.isInitialized && viewModel.cycleImages.first.not())
+            viewModel.cycleImages = true to IMG_ID_ANIMALS.size
     }
 
-    fun goToCategories(view: View?) {
+    override fun onPause() {
+        super.onPause()
+        viewModel.cycleImages = false to null
+    }
+
+    fun goToCategories(@Suppress("UNUSED_PARAMETER") view: View?) {
         startActivity(Intent(this, Categories::class.java))
     }
 
-    fun goToAnimals(view: View?) {
+    fun goToAnimals(@Suppress("UNUSED_PARAMETER") view: View?) {
         startActivity(Intent(this, Animals::class.java))
     }
 
     private fun setUpViewModel() {
-        viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java).apply {
+            cycleImages = true to IMG_ID_ANIMALS.size
+            retrieveSchedule()
+        }
 
-        viewModel.setupImages(IMG_ID_ANIMALS.size)
-        viewModel.retrieveSchedule()
-
-        viewModel.imgInd.observe(this, Observer { imgInd ->
+        viewModel.imageIndex.observe(this, Observer { imgInd ->
             ivAnimalImages.setImageResource(IMG_ID_ANIMALS[imgInd])
             tvAnimalHeadline.text = getString(STR_ID_HEAD_ANIMALS[imgInd])
             tvAnimalDescription.text = getString(STR_ID_DESC_ANIMALS[imgInd])
@@ -84,11 +85,5 @@ class HomePageActivity : AppCompatActivity() {
             tvSchedule.text = schedule.admissionTime
             tvLastAdmin.text = schedule.lastAdmission
         })
-    }
-
-    private fun setButtonWidthEqually(btnWidth: Int) {
-        for (btnId in BTN_IDS) {
-            findViewById<View>(btnId).layoutParams.width = btnWidth
-        }
     }
 }

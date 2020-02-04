@@ -92,15 +92,15 @@
     <ImageView
         android:id="@+id/ivAnimalImages"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="0dp"
         android:background="@android:color/black"
         android:contentDescription="@string/cnt_featured_animals"
         android:scaleType="centerCrop"
         android:src="@drawable/elephant"
+        app:layout_constraintBottom_toTopOf="@id/tvAnimalHeadline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivSeparator2" />
-
 
     <TextView
         android:id="@+id/tvAnimalHeadline"
@@ -114,16 +114,18 @@
         android:text="@string/elephant"
         android:textColor="@android:color/white"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/homepage_ll_learn_more"
         app:layout_constraintTop_toBottomOf="@id/ivAnimalImages" />
 
     <LinearLayout
+        android:id="@+id/homepage_ll_learn_more"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/black"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/btnTickets"
-        app:layout_constraintTop_toBottomOf="@id/tvAnimalHeadline">
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@id/homepage_ll_tabs">
 
         <TextView
             android:id="@+id/tvAnimalDescription"
@@ -155,45 +157,53 @@
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/btnCategories"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:background="@drawable/btn_ripple"
-        android:elevation="2dp"
-        android:fontFamily="@font/prompt"
-        android:onClick="goToCategories"
-        android:text="@string/categories"
-        android:textColor="@android:color/white"
-        android:translationZ="2dp"
+    <LinearLayout
+        android:id="@+id/homepage_ll_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/btnAnimals"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:background="@drawable/btn_ripple"
-        android:elevation="2dp"
-        android:fontFamily="@font/prompt"
-        android:onClick="goToAnimals"
-        android:text="@string/animals"
-        android:textColor="@android:color/white"
-        android:translationZ="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/btnCategories"
+            style="?android:buttonBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_ripple"
+            android:elevation="2dp"
+            android:fontFamily="@font/prompt"
+            android:onClick="goToCategories"
+            android:text="@string/categories"
+            android:textColor="@android:color/white"
+            android:translationZ="2dp" />
 
-    <Button
-        android:id="@+id/btnTickets"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:background="@drawable/btn_ripple_green"
-        android:elevation="2dp"
-        android:fontFamily="@font/prompt"
-        android:text="@string/tickets"
-        android:textColor="@android:color/white"
-        android:translationZ="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnAnimals"
-        app:layout_constraintStart_toEndOf="@id/btnCategories" />
+        <Button
+            android:id="@+id/btnTickets"
+            style="?android:buttonBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_ripple_green"
+            android:elevation="2dp"
+            android:fontFamily="@font/prompt"
+            android:text="@string/tickets"
+            android:textColor="@android:color/white"
+            android:translationZ="2dp" />
+
+        <Button
+            android:id="@+id/btnAnimals"
+            style="?android:buttonBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_ripple"
+            android:elevation="2dp"
+            android:fontFamily="@font/prompt"
+            android:onClick="goToAnimals"
+            android:text="@string/animals"
+            android:textColor="@android:color/white"
+            android:translationZ="2dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

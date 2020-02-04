@@ -3,60 +3,67 @@ package ca.judacribz.week2weekend.homepage.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ca.judacribz.week2weekend.custom.BaseViewModel
+import ca.judacribz.week2weekend.global.constants.SCHEDULE_ID_HOURS_TODAY
+import ca.judacribz.week2weekend.global.constants.SCHEDULE_ID_TODAY
+import ca.judacribz.week2weekend.global.constants.ZOO_ATLANTA_URL
 import ca.judacribz.week2weekend.homepage.model.Schedule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
-import org.jsoup.nodes.TextNode
+import org.jsoup.nodes.Document
 import java.io.IOException
 
 class HomePageViewModel : BaseViewModel() {
     companion object {
-        private const val DURATION_IMAGE_CHANGE: Long = 7000
-        private const val ITER_INDEX_BY = 1
+        private const val DURATION_IMAGE_CHANGE: Long = 5000
     }
 
-    private val _imgInd = MutableLiveData(0)
-    val imgInd: LiveData<Int>
-        get() = _imgInd
+    private val _imageIndex = MutableLiveData(0)
+    val imageIndex: LiveData<Int>
+        get() = _imageIndex
     private val _schedule = MutableLiveData<Schedule>()
     val schedule: LiveData<Schedule>
         get() = _schedule
 
-    var changeImgs = true
+    var cycleImages: Pair<Boolean, Int?> = false to null
+        set(pair) {
+            if (pair.first) cycleImages(pair.second!!)
 
-    fun setupImages(numImgs: Int) = bgDefaultScope.launch {
-        changeImgs = true
-        while (changeImgs) {
-            delay(DURATION_IMAGE_CHANGE)
-            _imgInd.postValue(_imgInd.value?.plus(ITER_INDEX_BY)?.rem(numImgs))
+            field = pair
         }
-    }
 
-    fun retrieveSchedule() = uiMainScope.launch {
+    fun retrieveSchedule() = bgIOScope.launch {
+        var document: Document? = null
+
         try {
-            val document = withContext(Dispatchers.IO) {
-                Jsoup.connect("https://zooatlanta.org/").get()
+            document = withContext(Dispatchers.IO) {
+                Jsoup.connect(ZOO_ATLANTA_URL).get()
             }
-            val scheduleNode = withContext(Dispatchers.Default) {
-                document
-                    .getElementById("today")
-                    .getElementById("hours-today")
-                    .textNodes()
-                    .subList(0, 2)
-            }
-            setSchedule(scheduleNode)
         } catch (e: IOException) {
             e.printStackTrace()
         }
+
+        withContext(Dispatchers.Main) {
+            val scheduleNode = document
+                ?.getElementById(SCHEDULE_ID_TODAY)
+                ?.getElementById(SCHEDULE_ID_HOURS_TODAY)
+                ?.textNodes()
+                ?.subList(0, 2)
+
+            scheduleNode?.let {
+                _schedule.value = Schedule(it[0].toString().trim(), it[1].toString().trim())
+            }
+        }
     }
 
-    private fun setSchedule(scheduleNode: List<TextNode>) {
-        _schedule.value = Schedule(
-            scheduleNode[0].toString().trim(),
-            scheduleNode[1].toString().trim()
-        )
+    private fun cycleImages(numImgs: Int) = bgDefaultScope.launch {
+        var i = _imageIndex.value
+        while (cycleImages.first) {
+            _imageIndex.postValue(i?.rem(numImgs))
+            delay(DURATION_IMAGE_CHANGE)
+            i = i?.inc()
+        }
     }
 }
