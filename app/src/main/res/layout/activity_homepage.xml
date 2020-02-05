@@ -2,17 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/clHomepage"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@drawable/bg"
+    android:id="@+id/clHomepage"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
     tools:context=".homepage.view.activities.HomePageActivity">
 
     <ImageView
-        android:id="@+id/ivBanner"
-        android:layout_width="match_parent"
-        android:layout_height="125dp"
         android:contentDescription="@string/cnt_zoo_atlanta_banner"
+        android:id="@+id/ivBanner"
+        android:layout_height="125dp"
+        android:layout_width="match_parent"
         android:padding="10dp"
         android:scaleType="fitXY"
         android:src="@drawable/zoo_atlanta_banner"
@@ -21,20 +21,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ivSeparator"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
         android:background="@android:color/black"
+        android:id="@+id/ivSeparator"
+        android:layout_height="2dp"
+        android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/ivBanner"
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/tvToday"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
         android:background="@android:color/white"
         android:fontFamily="@font/prompt"
         android:gravity="center"
+        android:id="@+id/tvToday"
+        android:layout_height="0dp"
+        android:layout_width="wrap_content"
         android:padding="10dp"
         android:text="@string/today"
         android:textColor="@color/colorZooAtlanta"
@@ -44,35 +44,35 @@
         app:layout_constraintTop_toTopOf="@id/tvSchedule" />
 
     <TextView
-        android:id="@+id/tvSchedule"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:fontFamily="@font/prompt"
         android:gravity="center"
+        android:id="@+id/tvSchedule"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvToday"
         app:layout_constraintTop_toBottomOf="@id/ivSeparator" />
 
     <TextView
-        android:id="@+id/tvLastAdmin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:fontFamily="@font/prompt"
         android:gravity="center"
+        android:id="@+id/tvLastAdmin"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvToday"
         app:layout_constraintTop_toBottomOf="@id/tvSchedule" />
 
     <TextView
-        android:id="@+id/tvViewSchedule"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:gravity="center"
+        android:id="@+id/tvViewSchedule"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
         android:text="@string/view_schedule"
         android:textColor="@color/colorHyperlink"
         android:textSize="17sp"
@@ -82,73 +82,71 @@
         app:layout_constraintTop_toBottomOf="@id/tvLastAdmin" />
 
     <ImageView
-        android:id="@+id/ivSeparator2"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
         android:background="@android:color/black"
+        android:id="@+id/ivSeparator2"
+        android:layout_height="2dp"
+        android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/tvToday"
         tools:ignore="ContentDescription" />
 
     <ImageView
-        android:id="@+id/ivAnimalImages"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:background="@android:color/black"
         android:contentDescription="@string/cnt_featured_animals"
+        android:id="@+id/ivAnimalImages"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/elephant"
         app:layout_constraintBottom_toTopOf="@id/tvAnimalHeadline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivSeparator2" />
 
     <TextView
-        android:id="@+id/tvAnimalHeadline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="@android:color/black"
         android:fontFamily="@font/fjalla"
+        android:id="@+id/tvAnimalHeadline"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:paddingEnd="8dp"
         android:paddingStart="8dp"
         android:paddingTop="8dp"
-        android:paddingEnd="8dp"
-        android:text="@string/elephant"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/homepage_ll_learn_more"
         app:layout_constraintTop_toBottomOf="@id/ivAnimalImages" />
 
     <LinearLayout
-        android:id="@+id/homepage_ll_learn_more"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="@android:color/black"
         android:gravity="center"
+        android:id="@+id/homepage_ll_learn_more"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:orientation="horizontal"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@id/homepage_ll_tabs">
 
         <TextView
-            android:id="@+id/tvAnimalDescription"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="9"
             android:background="@android:color/black"
             android:fontFamily="@font/prompt"
+            android:id="@+id/tvAnimalDescription"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="9"
+            android:layout_width="0dp"
             android:paddingBottom="10dp"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/btnLearnMore"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="4"
             android:background="@drawable/btn_ripple"
             android:elevation="2dp"
             android:fontFamily="@font/prompt"
+            android:id="@+id/btnLearnMore"
+            android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
             android:text="@string/learn_more"
             android:textColor="@android:color/white"
             android:translationZ="2dp"
@@ -159,48 +157,48 @@
 
     <LinearLayout
         android:id="@+id/homepage_ll_tabs"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/btnCategories"
             style="?android:buttonBarStyle"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
             android:background="@drawable/btn_ripple"
             android:elevation="2dp"
             android:fontFamily="@font/prompt"
+            android:id="@+id/btnCategories"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:onClick="goToCategories"
             android:text="@string/categories"
             android:textColor="@android:color/white"
             android:translationZ="2dp" />
 
         <Button
-            android:id="@+id/btnTickets"
             style="?android:buttonBarStyle"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
             android:background="@drawable/btn_ripple_green"
             android:elevation="2dp"
             android:fontFamily="@font/prompt"
+            android:id="@+id/btnTickets"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:text="@string/tickets"
             android:textColor="@android:color/white"
             android:translationZ="2dp" />
 
         <Button
-            android:id="@+id/btnAnimals"
             style="?android:buttonBarStyle"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
             android:background="@drawable/btn_ripple"
             android:elevation="2dp"
             android:fontFamily="@font/prompt"
+            android:id="@+id/btnAnimals"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:onClick="goToAnimals"
             android:text="@string/animals"
             android:textColor="@android:color/white"
