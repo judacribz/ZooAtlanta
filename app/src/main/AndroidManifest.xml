@@ -14,7 +14,7 @@
         <activity android:name=".animal_details.AnimalDetails" />
         <activity android:name=".animals.Animals" />
         <activity android:name=".categories.Categories" />
-        <activity android:name=".homepage.Homepage">
+        <activity android:name=".homepage.view.activities.HomePageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
