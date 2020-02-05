@@ -14,32 +14,6 @@ import kotlinx.android.synthetic.main.activity_homepage.*
 
 class HomePageActivity : AppCompatActivity() {
 
-    companion object {
-        private val IMG_ID_ANIMALS = intArrayOf(
-            R.drawable.elephant,
-            R.drawable.gorilla,
-            R.drawable.panda,
-            R.drawable.zebra
-        )
-        private val STR_ID_HEAD_ANIMALS = intArrayOf(
-            R.string.elephant,
-            R.string.gorilla,
-            R.string.panda,
-            R.string.zebra
-        )
-        private val STR_ID_DESC_ANIMALS = intArrayOf(
-            R.string.elephant_desc,
-            R.string.gorilla_desc,
-            R.string.panda_desc,
-            R.string.zebra_desc
-        )
-        private val BTN_IDS = intArrayOf(
-            R.id.btnCategories,
-            R.id.btnTickets,
-            R.id.btnAnimals
-        )
-    }
-
     private lateinit var viewModel: HomePageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,13 +26,13 @@ class HomePageActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (::viewModel.isInitialized && viewModel.cycleImages.first.not())
-            viewModel.cycleImages = true to IMG_ID_ANIMALS.size
+        if (::viewModel.isInitialized && viewModel.cycleImages.not())
+            viewModel.cycleImages = true
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.cycleImages = false to null
+        viewModel.cycleImages = false
     }
 
     fun goToCategories(@Suppress("UNUSED_PARAMETER") view: View?) {
@@ -71,14 +45,18 @@ class HomePageActivity : AppCompatActivity() {
 
     private fun setUpViewModel() {
         viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java).apply {
-            cycleImages = true to IMG_ID_ANIMALS.size
+            retrieveMainImages()
             retrieveSchedule()
         }
 
-        viewModel.imageIndex.observe(this, Observer { imgInd ->
-            ivAnimalImages.setImageResource(IMG_ID_ANIMALS[imgInd])
-            tvAnimalHeadline.text = getString(STR_ID_HEAD_ANIMALS[imgInd])
-            tvAnimalDescription.text = getString(STR_ID_DESC_ANIMALS[imgInd])
+        viewModel.mainImages.observe(this, Observer { mainAnimalList ->
+            if (mainAnimalList.isNullOrEmpty().not()) {
+                viewModel.imageIndex.observe(this, Observer { index ->
+                    ivAnimalImages.setImageBitmap(mainAnimalList[index].image)
+                    tvAnimalHeadline.text = mainAnimalList[index].headline
+                    tvAnimalDescription.text = mainAnimalList[index].body
+                })
+            }
         })
 
         viewModel.schedule.observe(this, Observer { schedule ->

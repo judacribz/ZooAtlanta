@@ -1,25 +1,30 @@
 package ca.judacribz.week2weekend.homepage.viewmodel
 
+import android.graphics.BitmapFactory
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ca.judacribz.week2weekend.custom.BaseViewModel
-import ca.judacribz.week2weekend.global.constants.SCHEDULE_ID_HOURS_TODAY
-import ca.judacribz.week2weekend.global.constants.SCHEDULE_ID_TODAY
-import ca.judacribz.week2weekend.global.constants.ZOO_ATLANTA_URL
+import ca.judacribz.week2weekend.global.constants.*
+import ca.judacribz.week2weekend.global.util.extractUrl
+import ca.judacribz.week2weekend.homepage.model.AnimalMain
 import ca.judacribz.week2weekend.homepage.model.Schedule
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.IOException
+import java.net.URL
+
 
 class HomePageViewModel : BaseViewModel() {
     companion object {
+        private val TAG = HomePageViewModel::class.java.simpleName
         private const val DURATION_IMAGE_CHANGE: Long = 5000
     }
 
+    private val _mainImages = MutableLiveData(ArrayList<AnimalMain>())
+    val mainImages: MutableLiveData<ArrayList<AnimalMain>>
+        get() = _mainImages
     private val _imageIndex = MutableLiveData(0)
     val imageIndex: LiveData<Int>
         get() = _imageIndex
@@ -27,12 +32,48 @@ class HomePageViewModel : BaseViewModel() {
     val schedule: LiveData<Schedule>
         get() = _schedule
 
-    var cycleImages: Pair<Boolean, Int?> = false to null
-        set(pair) {
-            if (pair.first) cycleImages(pair.second!!)
+    private var _numImages = 0
 
-            field = pair
+    var cycleImages: Boolean = false
+        set(value) {
+            if (value) cycleImages()
+
+            field = value
         }
+
+    fun retrieveMainImages() = bgIOScope.launch {
+        val document = try {
+            withContext(Dispatchers.IO) {
+                Jsoup.connect(ZOO_ATLANTA_URL).get()
+            }
+        } catch (e: IOException) {
+            e.apply {
+                Log.e(TAG, "retrieveMainImages: ", this)
+                printStackTrace()
+            }
+            return@launch
+        }
+
+        document.getElementsByClass(CLASS_SLIDE)?.apply {
+            forEach {
+                val url = extractUrl(it.getElementsByClass(CLASS_HERO_IMAGE)[0].attr(ATTR_STYLE))
+                val bitmap = async(Dispatchers.IO) {
+                    BitmapFactory.decodeStream(URL(url).openStream())
+                }
+                val headline = it.getElementsByTag(TAG_H2)[0].text()
+                val body = it.getElementsByTag(TAG_P)[0].text()
+
+                _mainImages.apply {
+                    value?.add(AnimalMain(bitmap.await(), headline, body))
+                    postValue(value)
+                }
+                _numImages++
+                if (_numImages == 1) {
+                    cycleImages = true
+                }
+            }
+        }
+    }
 
     fun retrieveSchedule() = bgIOScope.launch {
         var document: Document? = null
@@ -47,8 +88,8 @@ class HomePageViewModel : BaseViewModel() {
 
         withContext(Dispatchers.Main) {
             val scheduleNode = document
-                ?.getElementById(SCHEDULE_ID_TODAY)
-                ?.getElementById(SCHEDULE_ID_HOURS_TODAY)
+                ?.getElementById(ID_TODAY)
+                ?.getElementById(ID_HOURS_TODAY)
                 ?.textNodes()
                 ?.subList(0, 2)
 
@@ -58,12 +99,13 @@ class HomePageViewModel : BaseViewModel() {
         }
     }
 
-    private fun cycleImages(numImgs: Int) = bgDefaultScope.launch {
-        var i = _imageIndex.value
-        while (cycleImages.first) {
-            _imageIndex.postValue(i?.rem(numImgs))
+    private fun cycleImages() = bgDefaultScope.launch {
+        var i: Int = _imageIndex.value!!
+        while (cycleImages) {
+
+            _imageIndex.postValue(i.rem(_numImages))
             delay(DURATION_IMAGE_CHANGE)
-            i = i?.inc()
+            i++
         }
     }
 }
