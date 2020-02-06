@@ -1,4 +1,4 @@
-package ca.judacribz.week2weekend.custom
+package ca.judacribz.week2weekend.global.viewmodel
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
