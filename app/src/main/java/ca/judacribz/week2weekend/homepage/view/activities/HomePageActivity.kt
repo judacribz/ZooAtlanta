@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import ca.judacribz.week2weekend.R
 import ca.judacribz.week2weekend.animals.Animals
 import ca.judacribz.week2weekend.categories.Categories
+import ca.judacribz.week2weekend.global.view.activities.ZooAtlantaWebView
 import ca.judacribz.week2weekend.homepage.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.activity_homepage.*
 
@@ -26,13 +27,17 @@ class HomePageActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (::viewModel.isInitialized && viewModel.cycleImages.not())
-            viewModel.cycleImages = true
+        if (::viewModel.isInitialized && viewModel.cyclePosts.not())
+            viewModel.cyclePosts = true
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.cycleImages = false
+        viewModel.cyclePosts = false
+    }
+
+    fun learnMore(@Suppress("UNUSED_PARAMETER") view: View) {
+        viewModel.learnMoreUrl?.let { ZooAtlantaWebView.openActivity(this, it) }
     }
 
     fun goToCategories(@Suppress("UNUSED_PARAMETER") view: View?) {
@@ -49,12 +54,12 @@ class HomePageActivity : AppCompatActivity() {
             retrieveSchedule()
         }
 
-        viewModel.mainImages.observe(this, Observer { mainAnimalList ->
+        viewModel.mainPosts.observe(this, Observer { mainAnimalList ->
             if (mainAnimalList.isNullOrEmpty().not()) {
-                viewModel.imageIndex.observe(this, Observer { index ->
+                viewModel.postIndex.observe(this, Observer { index ->
                     ivAnimalImages.setImageBitmap(mainAnimalList[index].image)
                     tvAnimalHeadline.text = mainAnimalList[index].headline
-                    tvAnimalDescription.text = mainAnimalList[index].body
+                    tvAnimalDescription.text = mainAnimalList[index].shortDescription
                 })
             }
         })

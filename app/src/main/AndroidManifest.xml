@@ -6,11 +6,13 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".global.view.activities.ZooAtlantaWebView" />
         <activity android:name=".animal_details.AnimalDetails" />
         <activity android:name=".animals.Animals" />
         <activity android:name=".categories.Categories" />

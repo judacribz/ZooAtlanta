@@ -1,13 +1,13 @@
 package ca.judacribz.week2weekend.homepage.viewmodel
 
 import android.graphics.BitmapFactory
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ca.judacribz.week2weekend.custom.BaseViewModel
 import ca.judacribz.week2weekend.global.constants.*
 import ca.judacribz.week2weekend.global.util.extractUrl
-import ca.judacribz.week2weekend.homepage.model.AnimalMain
+import ca.judacribz.week2weekend.global.util.getFirstElementByTag
+import ca.judacribz.week2weekend.global.viewmodel.BaseViewModel
+import ca.judacribz.week2weekend.homepage.model.AnimalPost
 import ca.judacribz.week2weekend.homepage.model.Schedule
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
@@ -15,43 +15,42 @@ import org.jsoup.nodes.Document
 import java.io.IOException
 import java.net.URL
 
-
 class HomePageViewModel : BaseViewModel() {
     companion object {
-        private val TAG = HomePageViewModel::class.java.simpleName
         private const val DURATION_IMAGE_CHANGE: Long = 5000
     }
 
-    private val _mainImages = MutableLiveData(ArrayList<AnimalMain>())
-    val mainImages: MutableLiveData<ArrayList<AnimalMain>>
-        get() = _mainImages
-    private val _imageIndex = MutableLiveData(0)
-    val imageIndex: LiveData<Int>
-        get() = _imageIndex
+    private val _mainPosts = MutableLiveData(ArrayList<AnimalPost>())
+    val mainPosts: MutableLiveData<ArrayList<AnimalPost>>
+        get() = _mainPosts
+    private val _postIndex = MutableLiveData(0)
+    val postIndex: LiveData<Int>
+        get() = _postIndex
     private val _schedule = MutableLiveData<Schedule>()
     val schedule: LiveData<Schedule>
         get() = _schedule
 
-    private var _numImages = 0
+    private var _numPosts = 0
 
-    var cycleImages: Boolean = false
+    var cyclePosts: Boolean = false
         set(value) {
-            if (value) cycleImages()
+            if (value) cycleAnimalPosts()
 
             field = value
         }
+    val learnMoreUrl: String?
+        get() {
+            _mainPosts.value?.let {
+                if (it.isNotEmpty())
+                    return it[_postIndex.value!!].learnMoreUrl
+            }
+
+            return null
+        }
 
     fun retrieveMainImages() = bgIOScope.launch {
-        val document = try {
-            withContext(Dispatchers.IO) {
-                Jsoup.connect(ZOO_ATLANTA_URL).get()
-            }
-        } catch (e: IOException) {
-            e.apply {
-                Log.e(TAG, "retrieveMainImages: ", this)
-                printStackTrace()
-            }
-            return@launch
+        val document = withContext(Dispatchers.IO) {
+            Jsoup.connect(ZOO_ATLANTA_URL).get()
         }
 
         document.getElementsByClass(CLASS_SLIDE)?.apply {
@@ -60,16 +59,17 @@ class HomePageViewModel : BaseViewModel() {
                 val bitmap = async(Dispatchers.IO) {
                     BitmapFactory.decodeStream(URL(url).openStream())
                 }
-                val headline = it.getElementsByTag(TAG_H2)[0].text()
-                val body = it.getElementsByTag(TAG_P)[0].text()
+                val headline = it.getFirstElementByTag(TAG_H2)?.text()
+                val shortDescription = it.getFirstElementByTag(TAG_P)?.text()
+                val learMoreUrl = it.getFirstElementByTag(TAG_A)?.attr(ATTR_HREF)
 
-                _mainImages.apply {
-                    value?.add(AnimalMain(bitmap.await(), headline, body))
+                _mainPosts.apply {
+                    value?.add(AnimalPost(bitmap.await(), headline, shortDescription, learMoreUrl))
                     postValue(value)
                 }
-                _numImages++
-                if (_numImages == 1) {
-                    cycleImages = true
+                _numPosts++
+                if (_numPosts == 1) {
+                    cyclePosts = true
                 }
             }
         }
@@ -99,13 +99,15 @@ class HomePageViewModel : BaseViewModel() {
         }
     }
 
-    private fun cycleImages() = bgDefaultScope.launch {
-        var i: Int = _imageIndex.value!!
-        while (cycleImages) {
+    private fun cycleAnimalPosts() {
+        var i: Int = _postIndex.value!!
 
-            _imageIndex.postValue(i.rem(_numImages))
-            delay(DURATION_IMAGE_CHANGE)
-            i++
+        bgDefaultScope.launch {
+            while (cyclePosts) {
+                _postIndex.postValue(i.rem(_numPosts))
+                delay(DURATION_IMAGE_CHANGE)
+                i++
+            }
         }
     }
 }
