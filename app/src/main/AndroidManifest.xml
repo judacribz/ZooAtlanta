@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ca.judacribz.week2weekend">
+    package="ca.judacribz.zooatlanta">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,11 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".global.view.activities.ZooAtlantaWebView" />
-        <activity android:name=".animal_details.AnimalDetails" />
-        <activity android:name=".animals.Animals" />
-        <activity android:name=".categories.Categories" />
-        <activity android:name=".homepage.view.activities.HomePageActivity">
+        <activity android:name="ca.judacribz.zooatlanta.global.view.activities.ZooAtlantaWebView" />
+        <activity android:name="ca.judacribz.zooatlanta.animal_details.AnimalDetails" />
+        <activity android:name="ca.judacribz.zooatlanta.animals.Animals" />
+        <activity android:name="ca.judacribz.zooatlanta.categories.Categories" />
+        <activity android:name="ca.judacribz.zooatlanta.homepage.view.activities.HomePageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

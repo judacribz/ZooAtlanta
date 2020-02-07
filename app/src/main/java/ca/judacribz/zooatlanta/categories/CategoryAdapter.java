@@ -1,0 +1,48 @@
+package ca.judacribz.zooatlanta.categories;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+
+import java.util.ArrayList;
+
+import ca.judacribz.zooatlanta.R;
+import ca.judacribz.zooatlanta.models.Category;
+
+public class CategoryAdapter extends ArrayAdapter<Category> {
+
+    private Category category;
+
+    CategoryAdapter(Context context, ArrayList<Category> categories) {
+        super(context, 0, categories);
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(
+                    R.layout.item_category,
+                    parent,
+                    false
+            );
+        }
+
+        if ((category = getItem(position)) != null) {
+            setText(convertView, R.id.tvCategoryName, category.getName());
+            setText(convertView, R.id.tvNumSpecies, String.valueOf(category.getNumSpecies()));
+            setText(convertView, R.id.tvDescription, category.getDescription());
+        }
+
+        return convertView;
+    }
+
+    private void setText(View convertView, int tvId, String name) {
+        ((TextView) convertView.findViewById(tvId)).setText(name);
+    }
+}
