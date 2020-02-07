@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Week2Weekend</string>
+    <string name="app_name">Zoo Atlanta</string>
     <string name="number_of_species_here">Number of Species Here:</string>
     <string name="description">Description</string>
     <string name="view_schedule">VIEW SCHEDULE</string>
