@@ -49,10 +49,7 @@ class HomePageActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
-        viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java).apply {
-            retrieveMainImages()
-            retrieveSchedule()
-        }
+        viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
 
         viewModel.mainPosts.observe(this, Observer { mainAnimalList ->
             if (mainAnimalList.isNullOrEmpty().not()) {
