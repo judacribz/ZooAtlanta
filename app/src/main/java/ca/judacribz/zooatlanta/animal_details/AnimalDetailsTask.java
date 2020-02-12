@@ -13,10 +13,6 @@ public class AnimalDetailsTask extends AsyncTask<Animal, Void, Animal> {
     private Animal animal;
     private AnimalDetailsListener animalDetailsListener;
 
-    public interface AnimalDetailsListener {
-        void onAnimalDetailsReceived(Animal animal);
-    }
-
     AnimalDetailsTask(AnimalDetailsListener animalDetailsListener) {
         this.animalDetailsListener = animalDetailsListener;
     }
@@ -62,5 +58,9 @@ public class AnimalDetailsTask extends AsyncTask<Animal, Void, Animal> {
     @Override
     protected void onPostExecute(Animal animal) {
         animalDetailsListener.onAnimalDetailsReceived(animal);
+    }
+
+    public interface AnimalDetailsListener {
+        void onAnimalDetailsReceived(Animal animal);
     }
 }

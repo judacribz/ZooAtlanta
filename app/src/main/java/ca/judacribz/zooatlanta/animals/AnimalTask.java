@@ -23,10 +23,6 @@ public class AnimalTask extends AsyncTask<String, Void, ArrayList<Animal>> {
 
     private AnimalsListener animalsListener;
 
-    public interface AnimalsListener {
-        void onAnimalsReceived(ArrayList<Animal> animals);
-    }
-
     AnimalTask(AnimalsListener animalsListener) {
         this.animalsListener = animalsListener;
     }
@@ -93,5 +89,9 @@ public class AnimalTask extends AsyncTask<String, Void, ArrayList<Animal>> {
         if (!animals.isEmpty()) {
             animalsListener.onAnimalsReceived(animals);
         }
+    }
+
+    public interface AnimalsListener {
+        void onAnimalsReceived(ArrayList<Animal> animals);
     }
 }

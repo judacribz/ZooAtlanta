@@ -4,10 +4,20 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Animal implements Parcelable {
+    public static final Creator<Animal> CREATOR = new Creator<Animal>() {
+        @Override
+        public Animal createFromParcel(Parcel in) {
+            return new Animal(in);
+        }
+
+        @Override
+        public Animal[] newArray(int size) {
+            return new Animal[size];
+        }
+    };
     private static final String
             RETURN = " Returning",
             COMING = " Coming";
-
     private String
             name,
             description,
@@ -40,18 +50,6 @@ public class Animal implements Parcelable {
         range = in.readString();
         habitat = in.readString();
     }
-
-    public static final Creator<Animal> CREATOR = new Creator<Animal>() {
-        @Override
-        public Animal createFromParcel(Parcel in) {
-            return new Animal(in);
-        }
-
-        @Override
-        public Animal[] newArray(int size) {
-            return new Animal[size];
-        }
-    };
 
     public String getName() {
         return name;

@@ -11,10 +11,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     private ImageDownloadedListener imageDownloadedListener;
 
-    interface ImageDownloadedListener {
-        void onImageDownloaded(Bitmap bmp);
-    }
-
     public DownloadImageTask(ImageDownloadedListener imageDownloadedListener) {
         this.imageDownloadedListener = imageDownloadedListener;
     }
@@ -34,5 +30,9 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bmp) {
         imageDownloadedListener.onImageDownloaded(bmp);
+    }
+
+    interface ImageDownloadedListener {
+        void onImageDownloaded(Bitmap bmp);
     }
 }

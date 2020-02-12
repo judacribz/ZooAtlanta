@@ -15,10 +15,6 @@ public class CategoryTask extends AsyncTask<Void, Void, ArrayList<Category>> {
 
     CategoriesListener categoriesListener;
 
-    public interface CategoriesListener {
-        void onCategoriesReceived(ArrayList<Category> categories);
-    }
-
     public void setCategoriesListener(CategoriesListener categoriesListener) {
         this.categoriesListener = categoriesListener;
     }
@@ -74,5 +70,9 @@ public class CategoryTask extends AsyncTask<Void, Void, ArrayList<Category>> {
         if (!categories.isEmpty()) {
             categoriesListener.onCategoriesReceived(categories);
         }
+    }
+
+    public interface CategoriesListener {
+        void onCategoriesReceived(ArrayList<Category> categories);
     }
 }
