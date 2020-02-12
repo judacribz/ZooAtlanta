@@ -51,7 +51,7 @@ class HomePageViewModel : BaseViewModel() {
             return null
         }
 
-    private fun pullData() = launch(Dispatchers.IO) {
+    private fun pullData() = uiMainScope.launch(Dispatchers.IO) {
         val zooDocument = Jsoup.connect(ZOO_ATLANTA_URL).get() ?: return@launch
 
         launch(Dispatchers.IO) {
@@ -67,7 +67,7 @@ class HomePageViewModel : BaseViewModel() {
         zooDocument.getElementsByClass(CLASS_SLIDE)?.apply {
             forEach {
                 val url = extractUrl(it.getElementsByClass(CLASS_HERO_IMAGE)[0].attr(ATTR_STYLE))
-                val bitmap = async(Dispatchers.IO) {
+                val bitmap = bgDefaultScope.async(Dispatchers.IO) {
                     BitmapFactory.decodeStream(URL(url).openStream())
                 }
                 val headline = it.getFirstElementByTag(TAG_H2)?.text()
@@ -104,7 +104,7 @@ class HomePageViewModel : BaseViewModel() {
 
     private fun cycleAnimalPosts() {
         var i: Int = _postIndex.value!!
-        launch(Dispatchers.Default) {
+        bgDefaultScope.launch(Dispatchers.Default) {
             while (cyclePosts) {
                 _postIndex.postValue(i.rem(numPosts))
                 delay(DURATION_IMAGE_CHANGE)
