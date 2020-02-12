@@ -16,8 +16,5 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - name: Scope for Gradle
-      uses: undefinedlabs/scope-for-gradle-action@v1
-
     - name: Confirm Trello link included on Pull Request
       uses: delivered/trello-github-action@1
