@@ -12,7 +12,6 @@ import ca.judacribz.zooatlanta.homepage.model.Schedule
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import java.io.IOException
 import java.net.URL
 
 class HomePageViewModel : BaseViewModel() {
@@ -30,7 +29,11 @@ class HomePageViewModel : BaseViewModel() {
     val schedule: LiveData<Schedule>
         get() = _schedule
 
-    private var _numPosts = 0
+    var numPosts = 0
+
+    init {
+        pullData()
+    }
 
     var cyclePosts: Boolean = false
         set(value) {
@@ -48,12 +51,20 @@ class HomePageViewModel : BaseViewModel() {
             return null
         }
 
-    fun retrieveMainImages() = bgIOScope.launch {
-        val document = withContext(Dispatchers.IO) {
-            Jsoup.connect(ZOO_ATLANTA_URL).get()
+    private fun pullData() = launch(Dispatchers.IO) {
+        val zooDocument = Jsoup.connect(ZOO_ATLANTA_URL).get() ?: return@launch
+
+        launch(Dispatchers.IO) {
+            retrieveMainImages(zooDocument)
         }
 
-        document.getElementsByClass(CLASS_SLIDE)?.apply {
+        launch(Dispatchers.IO) {
+            retrieveSchedule(zooDocument)
+        }
+    }
+
+    private suspend fun retrieveMainImages(zooDocument: Document) {
+        zooDocument.getElementsByClass(CLASS_SLIDE)?.apply {
             forEach {
                 val url = extractUrl(it.getElementsByClass(CLASS_HERO_IMAGE)[0].attr(ATTR_STYLE))
                 val bitmap = async(Dispatchers.IO) {
@@ -64,47 +75,38 @@ class HomePageViewModel : BaseViewModel() {
                 val learMoreUrl = it.getFirstElementByTag(TAG_A)?.attr(ATTR_HREF)
 
                 _mainPosts.apply {
-                    value?.add(AnimalPost(bitmap.await(), headline, shortDescription, learMoreUrl))
-                    postValue(value)
+                    value!!.add(AnimalPost(bitmap.await(), headline, shortDescription, learMoreUrl))
+                    postValue(value!!)
+                    numPosts = value!!.size
                 }
-                _numPosts++
-                if (_numPosts == 1) {
+
+                if (numPosts == 1) {
                     cyclePosts = true
                 }
             }
         }
     }
 
-    fun retrieveSchedule() = bgIOScope.launch {
-        var document: Document? = null
-
-        try {
-            document = withContext(Dispatchers.IO) {
-                Jsoup.connect(ZOO_ATLANTA_URL).get()
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
+    private suspend fun retrieveSchedule(zooDocument: Document) {
         withContext(Dispatchers.Main) {
-            val scheduleNode = document
-                ?.getElementById(ID_TODAY)
+            val scheduleNode = zooDocument
+                .getElementById(ID_TODAY)
                 ?.getElementById(ID_HOURS_TODAY)
                 ?.textNodes()
-                ?.subList(0, 2)
+                ?.subList(0, 2) ?: return@withContext
 
-            scheduleNode?.let {
-                _schedule.value = Schedule(it[0].toString().trim(), it[1].toString().trim())
-            }
+            _schedule.value = Schedule(
+                scheduleNode[0].toString().trim(),
+                scheduleNode[1].toString().trim()
+            )
         }
     }
 
     private fun cycleAnimalPosts() {
         var i: Int = _postIndex.value!!
-
-        bgDefaultScope.launch {
+        launch(Dispatchers.Default) {
             while (cyclePosts) {
-                _postIndex.postValue(i.rem(_numPosts))
+                _postIndex.postValue(i.rem(numPosts))
                 delay(DURATION_IMAGE_CHANGE)
                 i++
             }

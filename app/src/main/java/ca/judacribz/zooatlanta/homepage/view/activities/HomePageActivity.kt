@@ -27,7 +27,7 @@ class HomePageActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (::viewModel.isInitialized && viewModel.cyclePosts.not())
+        if (::viewModel.isInitialized && viewModel.cyclePosts.not() && viewModel.numPosts > 0)
             viewModel.cyclePosts = true
     }
 
@@ -49,13 +49,10 @@ class HomePageActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
-        viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java).apply {
-            retrieveMainImages()
-            retrieveSchedule()
-        }
+        viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
 
         viewModel.mainPosts.observe(this, Observer { mainAnimalList ->
-            if (mainAnimalList.isNullOrEmpty().not()) {
+            if (mainAnimalList.isNotEmpty()) {
                 viewModel.postIndex.observe(this, Observer { index ->
                     ivAnimalImages.setImageBitmap(mainAnimalList[index].image)
                     tvAnimalHeadline.text = mainAnimalList[index].headline

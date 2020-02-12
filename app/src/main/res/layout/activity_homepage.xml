@@ -6,7 +6,7 @@
     android:id="@+id/clHomepage"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    tools:context="ca.judacribz.week2weekend.homepage.view.activities.HomePageActivity">
+    tools:context=".homepage.view.activities.HomePageActivity">
 
     <ImageView
         android:contentDescription="@string/cnt_zoo_atlanta_banner"
@@ -50,6 +50,7 @@
         android:id="@+id/tvSchedule"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
+        android:textColor="@android:color/black"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvToday"
@@ -62,6 +63,7 @@
         android:id="@+id/tvLastAdmin"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
+        android:textColor="@android:color/black"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvToday"
@@ -117,6 +119,7 @@
 
     <LinearLayout
         android:background="@android:color/black"
+        android:gravity="center"
         android:id="@+id/homepage_ll_learn_more"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
