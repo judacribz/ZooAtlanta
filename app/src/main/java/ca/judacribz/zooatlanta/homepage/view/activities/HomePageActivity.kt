@@ -1,6 +1,9 @@
 package ca.judacribz.zooatlanta.homepage.view.activities
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -50,6 +53,12 @@ class HomePageActivity : AppCompatActivity() {
 
     private fun setUpViewModel() {
         viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
+
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        if (activeNetwork?.isConnectedOrConnecting == true) {
+            viewModel.init()
+        }
 
         viewModel.mainPosts.observe(this, Observer { mainAnimalList ->
             if (mainAnimalList.isNotEmpty()) {

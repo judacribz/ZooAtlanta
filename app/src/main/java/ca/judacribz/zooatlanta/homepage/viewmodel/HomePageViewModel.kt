@@ -16,7 +16,7 @@ import java.net.URL
 
 class HomePageViewModel : BaseViewModel() {
     companion object {
-        private const val DURATION_IMAGE_CHANGE: Long = 5000
+        private const val DURATION_IMAGE_CHANGE: Long = 1000
     }
 
     private val _mainPosts = MutableLiveData(ArrayList<AnimalPost>())
@@ -30,10 +30,6 @@ class HomePageViewModel : BaseViewModel() {
         get() = _schedule
 
     var numPosts = 0
-
-    init {
-        pullData()
-    }
 
     var cyclePosts: Boolean = false
         set(value) {
@@ -51,7 +47,11 @@ class HomePageViewModel : BaseViewModel() {
             return null
         }
 
-    private fun pullData() = uiMainScope.launch(Dispatchers.IO) {
+    fun init() {
+        pullData()
+    }
+
+    private fun pullData() = bgIOScope.launch(Dispatchers.IO) {
         val zooDocument = Jsoup.connect(ZOO_ATLANTA_URL).get() ?: return@launch
 
         launch(Dispatchers.IO) {
@@ -63,10 +63,11 @@ class HomePageViewModel : BaseViewModel() {
         }
     }
 
-    private suspend fun retrieveMainImages(zooDocument: Document) {
-        zooDocument.getElementsByClass(CLASS_SLIDE)?.apply {
-            forEach {
-                val url = extractUrl(it.getElementsByClass(CLASS_HERO_IMAGE)[0].attr(ATTR_STYLE))
+    private suspend fun retrieveMainImages(zooDocument: Document) = bgDefaultScope.launch {
+        zooDocument.getElementsByClass(CLASS_SLIDE)?.forEach {
+            launch {
+                val url =
+                    extractUrl(it.getElementsByClass(CLASS_HERO_IMAGE)[0].attr(ATTR_STYLE))
                 val bitmap = bgDefaultScope.async(Dispatchers.IO) {
                     BitmapFactory.decodeStream(URL(url).openStream())
                 }
@@ -75,7 +76,14 @@ class HomePageViewModel : BaseViewModel() {
                 val learMoreUrl = it.getFirstElementByTag(TAG_A)?.attr(ATTR_HREF)
 
                 _mainPosts.apply {
-                    value!!.add(AnimalPost(bitmap.await(), headline, shortDescription, learMoreUrl))
+                    value!!.add(
+                        AnimalPost(
+                            bitmap.await(),
+                            headline,
+                            shortDescription,
+                            learMoreUrl
+                        )
+                    )
                     postValue(value!!)
                     numPosts = value!!.size
                 }
@@ -104,11 +112,13 @@ class HomePageViewModel : BaseViewModel() {
 
     private fun cycleAnimalPosts() {
         var i: Int = _postIndex.value!!
-        bgDefaultScope.launch(Dispatchers.Default) {
+        bgDefaultScope.launch(Dispatchers.IO) {
             while (cyclePosts) {
                 _postIndex.postValue(i.rem(numPosts))
                 delay(DURATION_IMAGE_CHANGE)
-                i++
+                synchronized(this) {
+                    i++
+                }
             }
         }
     }
