@@ -9,7 +9,6 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import ca.judacribz.zooatlanta.R;
 import ca.judacribz.zooatlanta.animals.Animals;
@@ -29,7 +28,6 @@ public class Categories extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
-        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.animal_classifications);
 
         lvCategories = findViewById(R.id.lvCategories);
         lvCategories.setOnItemClickListener(this);
