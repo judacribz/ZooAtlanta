@@ -7,7 +7,7 @@ import ca.judacribz.zooatlanta.global.constants.*
 import ca.judacribz.zooatlanta.global.util.extractUrl
 import ca.judacribz.zooatlanta.global.util.getFirstElementByTag
 import ca.judacribz.zooatlanta.global.viewmodel.BaseViewModel
-import ca.judacribz.zooatlanta.homepage.model.AnimalPost
+import ca.judacribz.zooatlanta.homepage.model.BasePost
 import ca.judacribz.zooatlanta.homepage.model.Schedule
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
@@ -19,8 +19,8 @@ class HomePageViewModel : BaseViewModel() {
         private const val DURATION_IMAGE_CHANGE: Long = 1000
     }
 
-    private val _mainPosts = MutableLiveData(ArrayList<AnimalPost>())
-    val mainPosts: MutableLiveData<ArrayList<AnimalPost>>
+    private val _mainPosts = MutableLiveData(ArrayList<BasePost>())
+    val mainPosts: MutableLiveData<ArrayList<BasePost>>
         get() = _mainPosts
     private val _postIndex = MutableLiveData(0)
     val postIndex: LiveData<Int>
@@ -77,7 +77,7 @@ class HomePageViewModel : BaseViewModel() {
 
                 _mainPosts.apply {
                     value!!.add(
-                        AnimalPost(
+                        BasePost(
                             bitmap.await(),
                             headline,
                             shortDescription,
