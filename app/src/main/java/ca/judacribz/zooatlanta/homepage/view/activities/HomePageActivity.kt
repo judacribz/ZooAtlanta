@@ -6,6 +6,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,8 +15,12 @@ import ca.judacribz.zooatlanta.R
 import ca.judacribz.zooatlanta.animals.Animals
 import ca.judacribz.zooatlanta.categories.Categories
 import ca.judacribz.zooatlanta.global.view.activities.ZooAtlantaWebView
+import ca.judacribz.zooatlanta.homepage.model.BasePost
 import ca.judacribz.zooatlanta.homepage.viewmodel.HomePageViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.activity_homepage.*
+
 
 class HomePageActivity : AppCompatActivity() {
 
@@ -52,6 +58,34 @@ class HomePageActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
+        val animFadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+        val animFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        var mainAnimalPosts: List<BasePost>? = null
+        var post: BasePost? = null
+
+        animFadeOut.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(animation: Animation?) {
+                // NOP
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                Glide
+                    .with(this@HomePageActivity)
+                    .load(post!!.imageUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .into(ivAnimalImage)
+
+                tvAnimalHeadline.text = post!!.headline
+                tvAnimalDescription.text = post!!.shortDescription
+
+                homepage_clAnimalPost.startAnimation(animFadeIn)
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+                // NOP
+            }
+        })
+
         viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
 
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -60,13 +94,14 @@ class HomePageActivity : AppCompatActivity() {
             viewModel.init()
         }
 
-        viewModel.mainPosts.observe(this, Observer { mainAnimalList ->
-            if (mainAnimalList.isNotEmpty()) {
-                viewModel.postIndex.observe(this, Observer { index ->
-                    ivAnimalImages.setImageBitmap(mainAnimalList[index].image)
-                    tvAnimalHeadline.text = mainAnimalList[index].headline
-                    tvAnimalDescription.text = mainAnimalList[index].shortDescription
-                })
+        viewModel.mainPosts.observe(this, Observer {
+            if (it.isNotEmpty()) mainAnimalPosts = it
+        })
+
+        viewModel.postIndex.observe(this, Observer { index ->
+            mainAnimalPosts?.get(index)?.let {
+                post = it
+                homepage_clAnimalPost.startAnimation(animFadeOut)
             }
         })
 

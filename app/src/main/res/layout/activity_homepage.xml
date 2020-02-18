@@ -20,14 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:background="@android:color/black"
-        android:id="@+id/ivSeparator"
-        android:layout_height="2dp"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/ivBanner"
-        tools:ignore="ContentDescription" />
-
     <TextView
         android:background="@android:color/white"
         android:fontFamily="@font/prompt"
@@ -54,7 +46,7 @@
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvToday"
-        app:layout_constraintTop_toBottomOf="@id/ivSeparator" />
+        app:layout_constraintTop_toBottomOf="@id/ivBanner" />
 
     <TextView
         android:background="@android:color/white"
@@ -83,62 +75,57 @@
         app:layout_constraintStart_toEndOf="@id/tvToday"
         app:layout_constraintTop_toBottomOf="@id/tvLastAdmin" />
 
-    <ImageView
+    <FrameLayout
         android:background="@android:color/black"
-        android:id="@+id/ivSeparator2"
-        android:layout_height="2dp"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/tvToday"
-        tools:ignore="ContentDescription" />
-
-    <ImageView
-        android:background="@android:color/black"
-        android:contentDescription="@string/cnt_featured_animals"
-        android:id="@+id/ivAnimalImages"
         android:layout_height="0dp"
         android:layout_width="match_parent"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@id/tvAnimalHeadline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivSeparator2" />
+        app:layout_constraintBottom_toBottomOf="@id/homepage_clAnimalPost"
+        app:layout_constraintTop_toTopOf="@id/homepage_clAnimalPost" />
 
-    <TextView
-        android:background="@android:color/black"
-        android:fontFamily="@font/fjalla"
-        android:id="@+id/tvAnimalHeadline"
-        android:layout_height="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/homepage_clAnimalPost"
+        android:layout_height="0dp"
         android:layout_width="match_parent"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
-        android:paddingTop="8dp"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/homepage_ll_learn_more"
-        app:layout_constraintTop_toBottomOf="@id/ivAnimalImages" />
+        app:layout_constraintBottom_toTopOf="@id/btnTickets"
+        app:layout_constraintTop_toBottomOf="@id/tvViewSchedule">
 
-    <LinearLayout
-        android:background="@android:color/black"
-        android:gravity="center"
-        android:id="@+id/homepage_ll_learn_more"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnTickets">
+        <ImageView
+            android:contentDescription="@string/cnt_featured_animals"
+            android:id="@+id/ivAnimalImage"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@id/tvAnimalHeadline"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:background="@android:color/black"
+            android:fontFamily="@font/fjalla"
+            android:id="@+id/tvAnimalHeadline"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:padding="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvAnimalDescription" />
+
+        <TextView
             android:fontFamily="@font/prompt"
             android:id="@+id/tvAnimalDescription"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_marginEnd="5dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="9"
             android:layout_width="0dp"
-            android:paddingBottom="10dp"
+            android:padding="5dp"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/btnLearnMore"
+            app:layout_constraintEnd_toStartOf="@id/btnLearnMore"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnLearnMore" />
 
         <Button
             android:background="@drawable/btn_ripple"
@@ -146,16 +133,20 @@
             android:fontFamily="@font/prompt"
             android:id="@+id/btnLearnMore"
             android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="4"
             android:layout_width="0dp"
             android:onClick="learnMore"
+            android:padding="10dp"
             android:text="@string/learn_more"
             android:textColor="@android:color/white"
             android:translationZ="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAnimalHeadline" />
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         style="?android:buttonBarStyle"
