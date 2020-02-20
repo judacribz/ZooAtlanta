@@ -1,9 +1,7 @@
 package ca.judacribz.zooatlanta.homepage.model
 
-import android.graphics.Bitmap
-
 data class BasePost(
-    val image: Bitmap,
+    val imageUrl: String?,
     val headline: String?,
     val shortDescription: String?,
     val learnMoreUrl: String?

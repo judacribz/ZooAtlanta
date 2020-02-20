@@ -3,7 +3,6 @@ package ca.judacribz.zooatlanta.global.view.activity
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.WebResourceRequest
@@ -29,8 +28,7 @@ class WebViewActivity : BaseActivity() {
 
     override fun getLayoutResource(): Int = R.layout.activity_web_view
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onPostCreateView() {
         setUpHomeIcon()
         setUpWebView()
     }

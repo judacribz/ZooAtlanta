@@ -1,22 +1,24 @@
 package ca.judacribz.zooatlanta.homepage.viewmodel
 
-import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ca.judacribz.zooatlanta.global.constants.*
 import ca.judacribz.zooatlanta.global.util.extractUrl
+import ca.judacribz.zooatlanta.global.util.getFirstClassByTag
 import ca.judacribz.zooatlanta.global.util.getFirstElementByTag
 import ca.judacribz.zooatlanta.global.viewmodel.BaseViewModel
 import ca.judacribz.zooatlanta.homepage.model.BasePost
 import ca.judacribz.zooatlanta.homepage.model.Schedule
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import java.net.URL
 
 class HomePageViewModel : BaseViewModel() {
     companion object {
-        private const val DURATION_IMAGE_CHANGE: Long = 1000
+        private const val DURATION_IMAGE_CHANGE: Long = 2000
     }
 
     private val _mainPosts = MutableLiveData(ArrayList<BasePost>())
@@ -47,7 +49,7 @@ class HomePageViewModel : BaseViewModel() {
             return null
         }
 
-    fun init() {
+    init {
         pullData()
     }
 
@@ -63,27 +65,25 @@ class HomePageViewModel : BaseViewModel() {
         }
     }
 
-    private suspend fun retrieveMainImages(zooDocument: Document) = bgDefaultScope.launch {
+    private suspend fun retrieveMainImages(zooDocument: Document) = withContext(Dispatchers.IO) {
         zooDocument.getElementsByClass(CLASS_SLIDE)?.forEach {
             launch {
-                val url =
-                    extractUrl(it.getElementsByClass(CLASS_HERO_IMAGE)[0].attr(ATTR_STYLE))
-                val bitmap = bgDefaultScope.async(Dispatchers.IO) {
-                    BitmapFactory.decodeStream(URL(url).openStream())
-                }
+                val imageUrl = extractUrl(it.getFirstClassByTag(CLASS_HERO_IMAGE)?.attr(ATTR_STYLE))
                 val headline = it.getFirstElementByTag(TAG_H2)?.text()
                 val shortDescription = it.getFirstElementByTag(TAG_P)?.text()
                 val learMoreUrl = it.getFirstElementByTag(TAG_A)?.attr(ATTR_HREF)
 
                 _mainPosts.apply {
-                    value!!.add(
-                        BasePost(
-                            bitmap.await(),
-                            headline,
-                            shortDescription,
-                            learMoreUrl
+                    synchronized(this) {
+                        value!!.add(
+                            BasePost(
+                                imageUrl,
+                                headline,
+                                shortDescription,
+                                learMoreUrl
+                            )
                         )
-                    )
+                    }
                     postValue(value!!)
                     numPosts = value!!.size
                 }
@@ -95,19 +95,19 @@ class HomePageViewModel : BaseViewModel() {
         }
     }
 
-    private suspend fun retrieveSchedule(zooDocument: Document) {
-        withContext(Dispatchers.Main) {
-            val scheduleNode = zooDocument
-                .getElementById(ID_TODAY)
-                ?.getElementById(ID_HOURS_TODAY)
-                ?.textNodes()
-                ?.subList(0, 2) ?: return@withContext
+    private fun retrieveSchedule(zooDocument: Document) {
+        val scheduleNode = zooDocument
+            .getElementById(ID_TODAY)
+            ?.getElementById(ID_HOURS_TODAY)
+            ?.textNodes()
+            ?.subList(0, 2) ?: return
 
-            _schedule.value = Schedule(
+        _schedule.postValue(
+            Schedule(
                 scheduleNode[0].toString().trim(),
                 scheduleNode[1].toString().trim()
             )
-        }
+        )
     }
 
     private fun cycleAnimalPosts() {
