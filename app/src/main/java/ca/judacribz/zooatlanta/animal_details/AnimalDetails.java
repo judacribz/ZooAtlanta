@@ -54,9 +54,9 @@ public class AnimalDetails extends AppCompatActivity implements
         tvRange = findViewById(R.id.tvRange);
         tvHabitat = findViewById(R.id.tvHabitat);
         tvViewingHints = findViewById(R.id.tvViewingHints);
-        tvDescription = findViewById(R.id.tvAnimalDescription);
+        tvDescription = findViewById(R.id.tvHomepageAnimalDescription);
 
-        ivAnimalImage = findViewById(R.id.ivAnimalImage);
+        ivAnimalImage = findViewById(R.id.ivHomepageAnimalImage);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

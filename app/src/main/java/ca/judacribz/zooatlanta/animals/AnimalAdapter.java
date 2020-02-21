@@ -77,7 +77,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvRange = itemView.findViewById(R.id.tvRange);
 
-            ivAnimalImage = itemView.findViewById(R.id.ivAnimalImage);
+            ivAnimalImage = itemView.findViewById(R.id.ivHomepageAnimalImage);
 
             itemView.setOnClickListener(new View.OnClickListener() {
 

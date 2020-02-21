@@ -71,12 +71,12 @@ class HomePageActivity : BaseActivity() {
                     .with(this@HomePageActivity)
                     .load(_post!!.imageUrl)
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .into(ivAnimalImage)
+                    .into(ivHomepageAnimalImage)
 
-                tvAnimalHeadline.text = _post!!.headline
-                tvAnimalDescription.text = _post!!.shortDescription
+                tvHomepageAnimalHeadline.text = _post!!.headline
+                tvHomepageAnimalDescription.text = _post!!.shortDescription
 
-                homepage_clAnimalPost.startAnimation(_animFadeIn)
+                clHomepageAnimalPost.startAnimation(_animFadeIn)
             }
 
             override fun onAnimationStart(animation: Animation?) {
@@ -95,13 +95,13 @@ class HomePageActivity : BaseActivity() {
         _viewModel.postIndex.observe(this, Observer { index ->
             _mainAnimalPosts?.get(index)?.let {
                 _post = it
-                homepage_clAnimalPost.startAnimation(_animFadeOut)
+                clHomepageAnimalPost.startAnimation(_animFadeOut)
             }
         })
 
         _viewModel.schedule.observe(this, Observer { schedule ->
-            tvSchedule.text = schedule.admissionTime
-            tvLastAdmin.text = schedule.lastAdmission
+            tvHomepageSchedule.text = schedule.admissionTime
+            tvHomepageLastAdmin.text = schedule.lastAdmission
         })
     }
 }
