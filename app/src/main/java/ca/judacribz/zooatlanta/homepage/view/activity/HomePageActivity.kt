@@ -4,8 +4,8 @@ import android.content.Intent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import ca.judacribz.zooatlanta.R
 import ca.judacribz.zooatlanta.animals.Animals
 import ca.judacribz.zooatlanta.categories.Categories
@@ -19,7 +19,8 @@ import kotlinx.android.synthetic.main.activity_homepage.*
 
 class HomePageActivity : BaseActivity() {
 
-    private lateinit var _viewModel: HomePageViewModel
+    private val _homePageViewModel: HomePageViewModel by viewModels()
+
     private lateinit var _animFadeOut: Animation
     private lateinit var _animFadeIn: Animation
 
@@ -34,22 +35,22 @@ class HomePageActivity : BaseActivity() {
         _animFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
 
         setUpMainPostAnimation()
-        setUpViewModel()
+        setUpObservers()
     }
 
     override fun onResume() {
         super.onResume()
-        if (::_viewModel.isInitialized && _viewModel.cyclePosts.not() && _viewModel.numPosts > 0)
-            _viewModel.cyclePosts = true
+        if (_homePageViewModel.cyclePosts.not() && _homePageViewModel.numPosts > 0)
+            _homePageViewModel.cyclePosts = true
     }
 
     override fun onPause() {
         super.onPause()
-        _viewModel.cyclePosts = false
+        _homePageViewModel.cyclePosts = false
     }
 
     fun learnMore(@Suppress("UNUSED_PARAMETER") view: View) {
-        _viewModel.learnMoreUrl?.let { WebViewActivity.openActivity(this, it) }
+        _homePageViewModel.learnMoreUrl?.let { WebViewActivity.openActivity(this, it) }
     }
 
     fun goToCategories(@Suppress("UNUSED_PARAMETER") view: View?) {
@@ -83,25 +84,22 @@ class HomePageActivity : BaseActivity() {
                 // NOP
             }
         })
-
     }
 
-    private fun setUpViewModel() {
-        _viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
-        _viewModel.mainPosts.observe(this, Observer {
+    private fun setUpObservers() {
+        viewModel.hasNetworkLiveData.observe(this, Observer {
+            _homePageViewModel.pullData()
+        })
+
+        _homePageViewModel.mainPosts.observe(this, Observer {
             if (it.isNotEmpty()) _mainAnimalPosts = it
         })
 
-        _viewModel.postIndex.observe(this, Observer { index ->
+        _homePageViewModel.postIndex.observe(this, Observer { index ->
             _mainAnimalPosts?.get(index)?.let {
                 _post = it
                 clHomepageAnimalPost.startAnimation(_animFadeOut)
             }
-        })
-
-        _viewModel.schedule.observe(this, Observer { schedule ->
-            tvHomepageSchedule.text = schedule.admissionTime
-            tvHomepageLastAdmin.text = schedule.lastAdmission
         })
     }
 }
