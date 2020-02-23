@@ -8,7 +8,6 @@ import ca.judacribz.zooatlanta.global.util.getFirstClassByTag
 import ca.judacribz.zooatlanta.global.util.getFirstElementByTag
 import ca.judacribz.zooatlanta.global.viewmodel.BaseViewModel
 import ca.judacribz.zooatlanta.homepage.model.BasePost
-import ca.judacribz.zooatlanta.homepage.model.Schedule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,9 +26,6 @@ class HomePageViewModel : BaseViewModel() {
     private val _postIndex = MutableLiveData(0)
     val postIndex: LiveData<Int>
         get() = _postIndex
-    private val _schedule = MutableLiveData<Schedule>()
-    val schedule: LiveData<Schedule>
-        get() = _schedule
 
     var numPosts = 0
 
@@ -49,19 +45,11 @@ class HomePageViewModel : BaseViewModel() {
             return null
         }
 
-    init {
-        pullData()
-    }
-
-    private fun pullData() = bgIOScope.launch(Dispatchers.IO) {
+    fun pullData() = bgIOScope.launch(Dispatchers.IO) {
         val zooDocument = Jsoup.connect(ZOO_ATLANTA_URL).get() ?: return@launch
 
         launch(Dispatchers.IO) {
             retrieveMainImages(zooDocument)
-        }
-
-        launch(Dispatchers.IO) {
-            retrieveSchedule(zooDocument)
         }
     }
 
@@ -75,39 +63,15 @@ class HomePageViewModel : BaseViewModel() {
 
                 _mainPosts.apply {
                     synchronized(this) {
-                        value!!.add(
-                            BasePost(
-                                imageUrl,
-                                headline,
-                                shortDescription,
-                                learMoreUrl
-                            )
-                        )
+                        value!!.add(BasePost(imageUrl, headline, shortDescription, learMoreUrl))
                     }
                     postValue(value!!)
                     numPosts = value!!.size
-                }
 
-                if (numPosts == 1) {
                     cyclePosts = true
                 }
             }
         }
-    }
-
-    private fun retrieveSchedule(zooDocument: Document) {
-        val scheduleNode = zooDocument
-            .getElementById(ID_TODAY)
-            ?.getElementById(ID_HOURS_TODAY)
-            ?.textNodes()
-            ?.subList(0, 2) ?: return
-
-        _schedule.postValue(
-            Schedule(
-                scheduleNode[0].toString().trim(),
-                scheduleNode[1].toString().trim()
-            )
-        )
     }
 
     private fun cycleAnimalPosts() {

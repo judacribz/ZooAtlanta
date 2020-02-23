@@ -2,9 +2,8 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
-    android:layout_height="@dimen/height_action_bar"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:padding="@dimen/margin_padding_small"
     android:theme="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,27 +11,36 @@
         android:layout_width="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:layout_height="match_parent"
+            android:id="@+id/ablToolbar"
+            android:layout_height="0dp"
             android:layout_width="match_parent"
-            android:theme="@style/Widget.MaterialComponents.AppBarLayout.Surface">
+            android:theme="@style/Widget.MaterialComponents.AppBarLayout.Surface"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:theme="@style/Widget.MaterialComponents.Toolbar.Surface"
                 app:contentInsetLeft="@dimen/margin_padding_none"
                 app:contentInsetStart="@dimen/margin_padding_none" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <ImageView
             android:contentDescription="@string/cnt_zoo_atlanta_logo"
+            android:id="@+id/ivToolbarImage"
             android:layout_height="@dimen/height_logo"
             android:layout_width="@dimen/width_logo"
             android:src="@drawable/zoo_atlanta_banner"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            layout="@layout/view_schedule"
+            android:layout_height="@dimen/height_action_bar"
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivToolbarImage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

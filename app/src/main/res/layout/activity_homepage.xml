@@ -11,71 +11,7 @@
         layout="@layout/toolbar"
         android:id="@+id/homepage_inc_toolbar" />
 
-    <TextView
-        android:background="@color/colorScheduleBgGrey"
-        android:fontFamily="@font/prompt_semi_bold"
-        android:gravity="center"
-        android:id="@+id/tvHomepageToday"
-        android:layout_height="@dimen/height_action_bar"
-        android:layout_width="wrap_content"
-        android:paddingBottom="@dimen/margin_padding_large"
-        android:paddingEnd="@dimen/margin_padding_xxlarge"
-        android:paddingStart="@dimen/margin_padding_xxlarge"
-        android:paddingTop="@dimen/margin_padding_large"
-        android:text="@string/today"
-        android:textAllCaps="true"
-        android:textColor="@color/colorZooAtlantaYellow"
-        android:textSize="@dimen/textsize_title_medium"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/homepage_inc_toolbar" />
 
-    <TextView
-        android:background="@color/colorScheduleBgGrey"
-        android:fontFamily="@font/prompt"
-        android:gravity="start"
-        android:id="@+id/tvHomepageSchedule"
-        android:layout_height="wrap_content"
-        android:layout_width="@dimen/constraint_zero"
-        android:paddingStart="@dimen/margin_padding_large"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/textsize_title_small"
-        app:layout_constraintBottom_toTopOf="@id/tvHomepageLastAdmin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvHomepageToday"
-        tools:ignore="RtlSymmetry" />
-
-    <TextView
-        android:background="@color/colorScheduleBgGrey"
-        android:fontFamily="@font/prompt"
-        android:gravity="start"
-        android:id="@+id/tvHomepageLastAdmin"
-        android:layout_height="wrap_content"
-        android:layout_width="@dimen/constraint_zero"
-        android:paddingStart="@dimen/margin_padding_large"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/textsize_title_small"
-        app:layout_constraintBottom_toBottomOf="@id/tvHomepageToday"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvHomepageToday"
-        app:layout_constraintTop_toTopOf="@id/tvHomepageToday"
-        tools:ignore="RtlSymmetry" />
-
-    <TextView
-        android:background="@color/colorScheduleBgGrey"
-        android:gravity="start"
-        android:id="@+id/tvHomepageViewSchedule"
-        android:layout_height="wrap_content"
-        android:layout_width="@dimen/constraint_zero"
-        android:paddingStart="@dimen/margin_padding_large"
-        android:text="@string/view_schedule"
-        android:textColor="@color/colorHyperlinkBlue"
-        android:textSize="@dimen/textsize_title_small"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvHomepageToday"
-        app:layout_constraintTop_toBottomOf="@id/tvHomepageLastAdmin"
-        tools:ignore="RtlSymmetry" />
 
     <FrameLayout
         android:background="@android:color/black"
@@ -89,7 +25,7 @@
         android:layout_height="@dimen/constraint_zero"
         android:layout_width="match_parent"
         app:layout_constraintBottom_toTopOf="@id/btnHomepageTickets"
-        app:layout_constraintTop_toBottomOf="@id/tvHomepageViewSchedule">
+        app:layout_constraintTop_toBottomOf="@id/homepage_inc_toolbar">
 
         <ImageView
             android:contentDescription="@string/cnt_featured_animals"
