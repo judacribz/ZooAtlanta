@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import ca.judacribz.zooatlanta.R;
 import ca.judacribz.zooatlanta.models.Animal;
@@ -35,7 +34,6 @@ public class Animals extends AppCompatActivity implements AnimalTask.AnimalsList
         }
 
         new AnimalTask(this).execute(category);
-        Objects.requireNonNull(getSupportActionBar()).setTitle(category.toUpperCase());
 
         rvAnimals = findViewById(R.id.rvAnimals);
         rvAnimals.setLayoutManager(new LinearLayoutManager(this));

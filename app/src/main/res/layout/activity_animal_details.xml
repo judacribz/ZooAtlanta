@@ -8,7 +8,7 @@
 
     <ImageView
         android:contentDescription="@string/cnt_photo_of_animal"
-        android:id="@+id/ivAnimalImage"
+        android:id="@+id/ivHomepageAnimalImage"
         android:layout_height="250dp"
         android:layout_width="match_parent"
         android:scaleType="centerCrop"
@@ -31,24 +31,24 @@
         android:textColor="@android:color/white"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/ivAnimalImage"
-        app:layout_constraintStart_toStartOf="@id/ivAnimalImage" />
+        app:layout_constraintBottom_toBottomOf="@id/ivHomepageAnimalImage"
+        app:layout_constraintStart_toStartOf="@id/ivHomepageAnimalImage" />
 
     <TextView
         android:fontFamily="@font/fjalla"
-        android:id="@+id/tvAnimalDescription"
+        android:id="@+id/tvHomepageAnimalDescription"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/ivAnimalImage" />
+        app:layout_constraintTop_toBottomOf="@id/ivHomepageAnimalImage" />
 
     <androidx.core.widget.NestedScrollView
         android:background="@drawable/rv_item_box"
         android:layout_height="0dp"
         android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAnimalDescription">
+        app:layout_constraintTop_toBottomOf="@id/tvHomepageAnimalDescription">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/desciptionScroll"
