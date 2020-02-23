@@ -3,13 +3,10 @@ package ca.judacribz.zooatlanta.global.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ca.judacribz.zooatlanta.AppSession
 import ca.judacribz.zooatlanta.global.constants.ID_HOURS_TODAY
 import ca.judacribz.zooatlanta.global.constants.ID_TODAY
 import ca.judacribz.zooatlanta.global.constants.ZOO_ATLANTA_URL
 import ca.judacribz.zooatlanta.global.model.Schedule
-import ca.judacribz.zooatlanta.global.util.isNetworkActive
-import ca.judacribz.zooatlanta.global.view.activity.BaseActivity
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 
@@ -26,25 +23,15 @@ class BaseAndroidViewModel : ViewModel() {
     private val job by lazyOf(Job())
 
     private val bgIOScope = CoroutineScope(job + Dispatchers.IO)
-    private val bgDefaultScope = CoroutineScope(job + Dispatchers.Default)
 
     override fun onCleared() {
         super.onCleared()
         job.cancel()
     }
 
-    // TODO: Update to use Broadcast Receiver
-    fun checkNetwork(session: AppSession, baseActivity: BaseActivity) = bgDefaultScope.launch {
-        while (isNetworkActive(baseActivity).not()) {
-            delay(2000)
-        }
+    fun setNetwork() = _hasNetworkLiveData.postValue(true)
 
-        _hasNetworkLiveData.postValue(true)
-
-        if (session.schedule == null) retrieveSchedule()
-    }
-
-    private fun retrieveSchedule() = bgIOScope.launch(Dispatchers.IO) {
+    fun retrieveSchedule() = bgIOScope.launch(Dispatchers.IO) {
         val zooDocument = Jsoup.connect(ZOO_ATLANTA_URL).get() ?: return@launch
 
         withContext(Dispatchers.Default) {

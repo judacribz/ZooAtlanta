@@ -88,7 +88,7 @@ class HomePageActivity : BaseActivity() {
 
     private fun setUpObservers() {
         viewModel.hasNetworkLiveData.observe(this, Observer {
-            _homePageViewModel.pullData()
+            if (it) _homePageViewModel.pullData()
         })
 
         _homePageViewModel.mainPosts.observe(this, Observer {
