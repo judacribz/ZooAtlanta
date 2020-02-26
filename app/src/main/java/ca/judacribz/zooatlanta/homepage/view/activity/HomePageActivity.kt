@@ -38,17 +38,6 @@ class HomePageActivity : BaseActivity() {
         setUpObservers()
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (_homePageViewModel.cyclePosts.not() && _homePageViewModel.numPosts > 0)
-            _homePageViewModel.cyclePosts = true
-    }
-
-    override fun onPause() {
-        super.onPause()
-        _homePageViewModel.cyclePosts = false
-    }
-
     fun learnMore(@Suppress("UNUSED_PARAMETER") view: View) {
         _homePageViewModel.learnMoreUrl?.let { WebViewActivity.openActivity(this, it) }
     }
@@ -87,7 +76,7 @@ class HomePageActivity : BaseActivity() {
     }
 
     private fun setUpObservers() {
-        viewModel.hasNetworkLiveData.observe(this, Observer {
+        baseViewModel.hasNetworkLiveData.observe(this, Observer {
             if (it) _homePageViewModel.pullData()
         })
 

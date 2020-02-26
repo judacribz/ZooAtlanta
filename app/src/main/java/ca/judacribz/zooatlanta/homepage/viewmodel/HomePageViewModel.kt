@@ -6,7 +6,7 @@ import ca.judacribz.zooatlanta.global.constants.*
 import ca.judacribz.zooatlanta.global.util.extractUrl
 import ca.judacribz.zooatlanta.global.util.getFirstClassByTag
 import ca.judacribz.zooatlanta.global.util.getFirstElementByTag
-import ca.judacribz.zooatlanta.global.viewmodel.BaseViewModel
+import ca.judacribz.zooatlanta.global.viewmodel.ViewModel
 import ca.judacribz.zooatlanta.homepage.model.BasePost
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
-class HomePageViewModel : BaseViewModel() {
+class HomePageViewModel : ViewModel() {
     companion object {
         private const val DURATION_IMAGE_CHANGE: Long = 2000
     }
@@ -31,9 +31,8 @@ class HomePageViewModel : BaseViewModel() {
 
     var cyclePosts: Boolean = false
         set(value) {
-            if (value) cycleAnimalPosts()
-
             field = value
+            if (value) cycleAnimalPosts()
         }
     val learnMoreUrl: String?
         get() {
@@ -68,7 +67,8 @@ class HomePageViewModel : BaseViewModel() {
                     postValue(value!!)
                     numPosts = value!!.size
 
-                    cyclePosts = true
+                    if (cyclePosts.not())
+                        cyclePosts = true
                 }
             }
         }
@@ -78,11 +78,10 @@ class HomePageViewModel : BaseViewModel() {
         var i: Int = _postIndex.value!!
         bgDefaultScope.launch(Dispatchers.IO) {
             while (cyclePosts) {
-                _postIndex.postValue(i.rem(numPosts))
-                delay(DURATION_IMAGE_CHANGE)
                 synchronized(this) {
-                    i++
+                    _postIndex.postValue(synchronized(this) { i++ }.rem(numPosts))
                 }
+                delay(DURATION_IMAGE_CHANGE)
             }
         }
     }
