@@ -12,24 +12,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import ca.judacribz.zooatlanta.AppSession
 import ca.judacribz.zooatlanta.R
+import ca.judacribz.zooatlanta.global.view.dialog.ProgressDialog
 import ca.judacribz.zooatlanta.global.viewmodel.BaseViewModel
-import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_schedule.*
+import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.view_schedule.tvScheduleLastAdmin
+import kotlinx.android.synthetic.main.view_schedule.tvScheduleSchedule
 
 abstract class BaseActivity : AppCompatActivity() {
+
+    companion object {
+        private val NETWORK_REQUEST: NetworkRequest by lazy {
+            NetworkRequest.Builder().apply {
+                addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            }.build()
+        }
+    }
 
     private val _connectivityManager: ConnectivityManager by lazy {
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
-    private val _networkRequest: NetworkRequest by lazy {
-        NetworkRequest.Builder().apply {
-            addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-            addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-        }.build()
-    }
-    private val _connectivityCallback by lazy {
-        getConnectivityCallback()
-    }
+    private val _connectivityCallback by lazy { getConnectivityCallback() }
+    private val progressDialog: ProgressDialog by lazy { ProgressDialog(this) }
     private var _unregisteredCallback = false
 
     protected val baseViewModel: BaseViewModel by viewModels()
@@ -43,7 +47,8 @@ abstract class BaseActivity : AppCompatActivity() {
         setUpObservers()
         onPostCreateView()
 
-        _connectivityManager.registerNetworkCallback(_networkRequest, _connectivityCallback)
+        _connectivityManager.registerNetworkCallback(NETWORK_REQUEST, _connectivityCallback)
+        progressDialog.showNetworkLoading()
     }
 
     override fun onStart() {
@@ -90,6 +95,7 @@ abstract class BaseActivity : AppCompatActivity() {
             if (isNetworkActive()) {
                 unregisterNetworkCallback()
                 baseViewModel.setNetwork()
+                progressDialog.dismiss()
             }
         }
     }

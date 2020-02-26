@@ -11,8 +11,6 @@
         layout="@layout/toolbar"
         android:id="@+id/homepage_inc_toolbar" />
 
-
-
     <FrameLayout
         android:background="@android:color/black"
         android:layout_height="@dimen/constraint_zero"
@@ -31,6 +29,7 @@
             android:contentDescription="@string/cnt_featured_animals"
             android:id="@+id/ivHomepageAnimalImage"
             android:layout_height="@dimen/constraint_zero"
+            android:layout_marginBottom="@dimen/margin_padding_medium"
             android:layout_width="match_parent"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@id/tvHomepageAnimalHeadline"
@@ -41,63 +40,50 @@
             android:fontFamily="@font/fjalla"
             android:id="@+id/tvHomepageAnimalHeadline"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_padding_large"
             android:layout_width="match_parent"
-            android:padding="@dimen/margin_padding_large"
             android:textColor="@color/colorScheduleBgGrey"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvHomepageAnimalDescription" />
+            android:textSize="@dimen/textsize_title_medium"
+            app:layout_constraintBottom_toTopOf="@id/tvHomepageAnimalDescription" />
 
         <TextView
             android:fontFamily="@font/prompt"
             android:id="@+id/tvHomepageAnimalDescription"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_padding_large"
-            android:layout_marginEnd="@dimen/margin_padding_small"
-            android:layout_marginStart="@dimen/margin_padding_large"
-            android:layout_marginTop="@dimen/margin_padding_large"
-            android:layout_weight="9"
-            android:layout_width="@dimen/constraint_zero"
-            android:padding="@dimen/margin_padding_small"
+            android:layout_margin="@dimen/margin_padding_large"
+            android:layout_width="match_parent"
             android:textColor="@color/colorDefaultTextWhite"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/btnHomepageLearnMore"
-            app:layout_constraintEnd_toStartOf="@id/btnHomepageLearnMore"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btnHomepageLearnMore" />
+            android:textSize="@dimen/textsize_title_small"
+            app:layout_constraintBottom_toTopOf="@id/btnHomepageLearnMore" />
 
         <Button
             android:background="@drawable/btn_ripple"
-            android:elevation="2dp"
+            android:elevation="@dimen/elevation_button_default"
             android:fontFamily="@font/prompt"
             android:id="@+id/btnHomepageLearnMore"
-            android:layout_height="50dp"
-            android:layout_marginBottom="@dimen/margin_padding_large"
-            android:layout_marginEnd="@dimen/margin_padding_large"
-            android:layout_marginStart="@dimen/margin_padding_small"
-            android:layout_marginTop="@dimen/margin_padding_large"
-            android:layout_weight="4"
-            android:layout_width="@dimen/constraint_zero"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_padding_large"
+            android:layout_width="wrap_content"
             android:onClick="learnMore"
             android:padding="@dimen/margin_padding_large"
             android:text="@string/learn_more"
             android:textColor="@color/colorDefaultTextWhite"
-            android:translationZ="2dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         style="?android:buttonBarStyle"
         android:background="@drawable/btn_ripple"
-        android:elevation="2dp"
+        android:elevation="@dimen/elevation_button_default"
         android:fontFamily="@font/prompt"
         android:id="@+id/btnHomepageCategories"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/height_btn_bar"
         android:layout_width="@dimen/constraint_zero"
         android:onClick="goToCategories"
         android:text="@string/categories"
         android:textColor="@color/colorDefaultTextWhite"
-        android:translationZ="2dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnHomepageTickets"
         app:layout_constraintEnd_toStartOf="@+id/btnHomepageTickets"
         app:layout_constraintStart_toStartOf="parent" />

@@ -15,7 +15,11 @@ import ca.judacribz.zooatlanta.homepage.model.BasePost
 import ca.judacribz.zooatlanta.homepage.viewmodel.HomePageViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import kotlinx.android.synthetic.main.activity_homepage.*
+import kotlinx.android.synthetic.main.activity_homepage.btnHomepageLearnMore
+import kotlinx.android.synthetic.main.activity_homepage.clHomepageAnimalPost
+import kotlinx.android.synthetic.main.activity_homepage.ivHomepageAnimalImage
+import kotlinx.android.synthetic.main.activity_homepage.tvHomepageAnimalDescription
+import kotlinx.android.synthetic.main.activity_homepage.tvHomepageAnimalHeadline
 
 class HomePageActivity : BaseActivity() {
 
@@ -26,7 +30,6 @@ class HomePageActivity : BaseActivity() {
 
     private var _mainAnimalPosts: List<BasePost>? = null
     private var _post: BasePost? = null
-
 
     override fun getLayoutResource(): Int = R.layout.activity_homepage
 
@@ -65,6 +68,7 @@ class HomePageActivity : BaseActivity() {
 
                 tvHomepageAnimalHeadline.text = _post!!.headline
                 tvHomepageAnimalDescription.text = _post!!.shortDescription
+                btnHomepageLearnMore.visibility = View.VISIBLE
 
                 clHomepageAnimalPost.startAnimation(_animFadeIn)
             }
