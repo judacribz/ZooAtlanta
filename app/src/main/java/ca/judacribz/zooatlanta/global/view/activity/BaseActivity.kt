@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.view_schedule.tvScheduleLastAdmin
 import kotlinx.android.synthetic.main.view_schedule.tvScheduleSchedule
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppCompatActivity() {
 
     companion object {
         private val NETWORK_REQUEST: NetworkRequest by lazy {
@@ -33,25 +33,35 @@ abstract class BaseActivity : AppCompatActivity() {
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
     private val _connectivityCallback by lazy { getConnectivityCallback() }
-    private val progressDialog: ProgressDialog by lazy { ProgressDialog(this) }
+    private val _progressDialog: ProgressDialog by lazy { ProgressDialog(this) }
     private var _unregisteredCallback = false
 
     protected val baseViewModel: BaseViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayoutResource())
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
+        setUpUi()
         setUpObservers()
         onPostCreateView()
 
         _connectivityManager.registerNetworkCallback(NETWORK_REQUEST, _connectivityCallback)
-        progressDialog.showNetworkLoading()
+        _progressDialog.showNetworkLoading()
     }
 
-    override fun onStart() {
+    private fun setUpUi() {
+        setContentView(getLayoutResource())
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setDisplayShowTitleEnabled(false)
+            if (showHomeIcon) {
+                setDisplayHomeAsUpEnabled(true)
+                setDisplayShowHomeEnabled(true)
+                setHomeAsUpIndicator(R.drawable.ic_home)
+            }
+        }
+    }
+
+    final override fun onStart() {
         super.onStart()
         AppSession.schedule?.run {
             tvScheduleSchedule.text = admissionTime
@@ -59,7 +69,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStop() {
+    final override fun onStop() {
         super.onStop()
         unregisterNetworkCallback()
     }
@@ -68,13 +78,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected abstract fun onPostCreateView()
 
-    protected fun setUpHomeIcon() {
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
-            setHomeAsUpIndicator(R.drawable.ic_home)
-        }
-    }
+    fun showLoading(loadingText: String = "") = _progressDialog.show(loadingText)
+
+    fun hideLoading() = _progressDialog.dismiss()
 
     private fun setUpObservers() {
         baseViewModel.hasNetworkLiveData.observe(this, Observer {
@@ -95,7 +101,7 @@ abstract class BaseActivity : AppCompatActivity() {
             if (isNetworkActive()) {
                 unregisterNetworkCallback()
                 baseViewModel.setNetwork()
-                progressDialog.dismiss()
+                hideLoading()
             }
         }
     }

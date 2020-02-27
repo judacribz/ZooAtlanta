@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/rv_item_box"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:background="@drawable/rv_item_box"
     android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/tvAnimalName"
         android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginBottom="2dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,14 +21,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:contentDescription="@string/cnt_photo_of_animal"
         android:id="@+id/ivHomepageAnimalImage"
         android:layout_height="150dp"
+        android:layout_width="210dp"
         android:layout_marginBottom="2dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="2dp"
-        android:layout_width="210dp"
+        android:contentDescription="@string/cnt_photo_of_animal"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvAnimalName" />
@@ -36,8 +36,8 @@
     <TextView
         android:id="@+id/tvScientificName"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
         android:layout_width="wrap_content"
+        android:layout_marginEnd="2dp"
         android:shadowColor="@android:color/black"
         android:shadowDx="2"
         android:shadowDy="2"
@@ -51,10 +51,10 @@
     <TextView
         android:id="@+id/tvDietLabel"
         android:layout_height="wrap_content"
+        android:layout_width="0dp"
         android:layout_marginEnd="2dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
-        android:layout_width="0dp"
         android:text="@string/diet"
         android:textAllCaps="true"
         android:textSize="18sp"
@@ -66,8 +66,8 @@
     <TextView
         android:id="@+id/tvDiet"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:layout_width="wrap_content"
+        android:layout_marginTop="2dp"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@id/tvDietLabel"
         app:layout_constraintTop_toBottomOf="@id/tvDietLabel" />
@@ -75,9 +75,9 @@
     <TextView
         android:id="@+id/tvStatusLabel"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_marginEnd="2dp"
         android:layout_marginStart="8dp"
-        android:layout_width="wrap_content"
         android:text="@string/status"
         android:textAllCaps="true"
         android:textSize="18sp"
@@ -89,8 +89,8 @@
     <TextView
         android:id="@+id/tvStatus"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:layout_width="wrap_content"
+        android:layout_marginTop="2dp"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@id/tvStatusLabel"
         app:layout_constraintTop_toBottomOf="@id/tvStatusLabel" />
@@ -98,9 +98,9 @@
     <TextView
         android:id="@+id/tvRangeLabel"
         android:layout_height="wrap_content"
+        android:layout_width="0dp"
         android:layout_marginEnd="2dp"
         android:layout_marginStart="8dp"
-        android:layout_width="0dp"
         android:text="@string/range"
         android:textAllCaps="true"
         android:textSize="18sp"
@@ -111,9 +111,9 @@
     <TextView
         android:id="@+id/tvRange"
         android:layout_height="wrap_content"
+        android:layout_width="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="2dp"
-        android:layout_width="0dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@id/ivHomepageAnimalImage"
         app:layout_constraintStart_toStartOf="@id/tvRangeLabel"

@@ -10,8 +10,8 @@
     <dimen name="margin_padding_xlarge">20dp</dimen>
     <dimen name="margin_padding_xxlarge">30dp</dimen>
 
-
     <dimen name="height_action_bar">63dp</dimen>
+    <dimen name="height_button_bar">50dp</dimen>
 
     <dimen name="height_logo">63dp</dimen>
     <dimen name="width_logo">210dp</dimen>
@@ -21,7 +21,5 @@
 
     <dimen name="elevation_button_default">2dp</dimen>
 
-    <dimen name="dimen_progress">145dp</dimen>
-
-    <dimen name="height_btn_bar">50dp</dimen>
+    <dimen name="dimen_progress">200dp</dimen>
 </resources>

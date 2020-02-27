@@ -7,8 +7,8 @@
     tools:context=".global.view.activity.WebViewActivity">
 
     <include
-        layout="@layout/toolbar"
         android:id="@+id/web_view_inc_toolbar"
+        layout="@layout/toolbar"
         app:layout_constraintTop_toTopOf="parent" />
 
     <WebView

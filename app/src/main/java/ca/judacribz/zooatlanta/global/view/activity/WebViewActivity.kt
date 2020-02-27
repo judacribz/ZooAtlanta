@@ -10,9 +10,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import ca.judacribz.zooatlanta.R
 import ca.judacribz.zooatlanta.global.constants.ZOO_ATLANTA_URL
-import kotlinx.android.synthetic.main.activity_web_view.*
+import kotlinx.android.synthetic.main.activity_web_view.web_view_wv_page_holder
 
-class WebViewActivity : BaseActivity() {
+class WebViewActivity : BaseActivity(true) {
 
     companion object {
         private const val EXTRA_URL = "ca.judacribz.zooatlanta.global.view.activity.EXTRA_URL"
@@ -29,7 +29,6 @@ class WebViewActivity : BaseActivity() {
     override fun getLayoutResource(): Int = R.layout.activity_web_view
 
     override fun onPostCreateView() {
-        setUpHomeIcon()
         setUpWebView()
     }
 

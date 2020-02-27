@@ -17,12 +17,15 @@ import kotlinx.coroutines.withContext
 class ProgressDialog(context: Context) : Dialog(context) {
 
     companion object {
-        val NETWORK_START_INDEX = 0
-        val DOT_CYCLE_DIVISOR = 3
+        private const val DOT_CYCLE_DIVISOR = 4
+        private const val LOAD_DELAY = 800L
     }
 
     private val _networkLoadingText: String by lazy {
-        context.getString(R.string.searching_for_network)
+        "   ${context.getString(R.string.searching_for_network)}"
+    }
+    private val _loadingTextLength: Int by lazy {
+        _networkLoadingText.length
     }
     private var _networkLoading = false
 
@@ -32,8 +35,18 @@ class ProgressDialog(context: Context) : Dialog(context) {
 
         Glide.with(context)
             .load(R.drawable.loading)
-            .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE))
+            .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
             .into(ivProgressGif)
+    }
+
+    override fun dismiss() {
+        _networkLoading = false
+        super.dismiss()
+    }
+
+    fun show(loadingText: String) {
+        tvProgressLoading.text = loadingText
+        super.show()
     }
 
     fun showNetworkLoading() {
@@ -41,21 +54,16 @@ class ProgressDialog(context: Context) : Dialog(context) {
         var i = Int.MAX_VALUE
         GlobalScope.launch {
             do {
+                val offset = i--.rem(DOT_CYCLE_DIVISOR)
                 withContext(Dispatchers.Main) {
                     tvProgressLoading.text = _networkLoadingText.substring(
-                        NETWORK_START_INDEX,
-                        _networkLoadingText.length - i--.rem(DOT_CYCLE_DIVISOR)
+                        offset,
+                        _loadingTextLength - offset
                     )
                 }
-                delay(500)
+                delay(LOAD_DELAY)
             } while (_networkLoading)
         }
-        show()
-    }
-
-    override fun dismiss() {
-        super.dismiss()
-        _networkLoading = false
-        tvProgressLoading.text = ""
+        super.show()
     }
 }

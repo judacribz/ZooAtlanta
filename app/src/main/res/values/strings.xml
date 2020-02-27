@@ -34,5 +34,5 @@
     <string name="forward">forward</string>
     <string name="cnt_zoo_atlanta_logo">Zoo Atlanta Logo</string>
 
-    <string name="searching_for_network" tools:ignore="TypographyEllipsis">   Searching for Network...</string>
+    <string name="searching_for_network" tools:ignore="TypographyEllipsis">Searching for Network...</string>
 </resources>

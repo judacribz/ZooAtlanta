@@ -6,12 +6,12 @@
     android:layout_width="match_parent">
 
     <TextView
-        android:background="@color/colorScheduleBgGrey"
-        android:fontFamily="@font/prompt_semi_bold"
-        android:gravity="center"
         android:id="@+id/tvScheduleToday"
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
+        android:background="@color/colorScheduleBgGrey"
+        android:fontFamily="@font/prompt_semi_bold"
+        android:gravity="center"
         android:paddingBottom="@dimen/margin_padding_large"
         android:paddingEnd="@dimen/margin_padding_xxlarge"
         android:paddingStart="@dimen/margin_padding_xxlarge"
@@ -24,12 +24,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:background="@color/colorScheduleBgGrey"
-        android:fontFamily="@font/prompt"
-        android:gravity="bottom"
         android:id="@+id/tvScheduleSchedule"
         android:layout_height="@dimen/constraint_zero"
         android:layout_width="@dimen/constraint_zero"
+        android:background="@color/colorScheduleBgGrey"
+        android:fontFamily="@font/prompt"
+        android:gravity="bottom"
         android:paddingStart="@dimen/margin_padding_large"
         android:textColor="@android:color/black"
         android:textSize="@dimen/textsize_title_small"
@@ -40,12 +40,12 @@
         tools:ignore="RtlSymmetry" />
 
     <TextView
-        android:background="@color/colorScheduleBgGrey"
-        android:fontFamily="@font/prompt"
-        android:gravity="start"
         android:id="@+id/tvScheduleLastAdmin"
         android:layout_height="wrap_content"
         android:layout_width="@dimen/constraint_zero"
+        android:background="@color/colorScheduleBgGrey"
+        android:fontFamily="@font/prompt"
+        android:gravity="start"
         android:paddingStart="@dimen/margin_padding_large"
         android:textColor="@android:color/black"
         android:textSize="@dimen/textsize_title_small"
@@ -56,11 +56,11 @@
         tools:ignore="RtlSymmetry" />
 
     <TextView
-        android:background="@color/colorScheduleBgGrey"
-        android:gravity="top"
         android:id="@+id/tvScheduleViewSchedule"
         android:layout_height="@dimen/constraint_zero"
         android:layout_width="@dimen/constraint_zero"
+        android:background="@color/colorScheduleBgGrey"
+        android:gravity="top"
         android:paddingStart="@dimen/margin_padding_large"
         android:text="@string/view_schedule"
         android:textColor="@color/colorHyperlinkBlue"

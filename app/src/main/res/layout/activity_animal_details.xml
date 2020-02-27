@@ -7,23 +7,23 @@
     tools:context=".animal_details.AnimalDetails">
 
     <ImageView
-        android:contentDescription="@string/cnt_photo_of_animal"
         android:id="@+id/ivHomepageAnimalImage"
         android:layout_height="250dp"
         android:layout_width="match_parent"
+        android:contentDescription="@string/cnt_photo_of_animal"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:fontFamily="@font/prompt"
         android:id="@+id/tvAnimalName"
         android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
-        android:layout_width="match_parent"
+        android:fontFamily="@font/prompt"
         android:shadowColor="@android:color/black"
         android:shadowDx="-2"
         android:shadowDy="2"
@@ -35,18 +35,18 @@
         app:layout_constraintStart_toStartOf="@id/ivHomepageAnimalImage" />
 
     <TextView
-        android:fontFamily="@font/fjalla"
         android:id="@+id/tvHomepageAnimalDescription"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/fjalla"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/ivHomepageAnimalImage" />
 
     <androidx.core.widget.NestedScrollView
-        android:background="@drawable/rv_item_box"
         android:layout_height="0dp"
         android:layout_width="match_parent"
+        android:background="@drawable/rv_item_box"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvHomepageAnimalDescription">
 
@@ -56,23 +56,23 @@
             android:layout_width="match_parent">
 
             <ImageButton
-                android:background="@drawable/btn_ripple"
-                android:contentDescription="@string/cnt_sound_image"
                 android:id="@+id/ibtnSound"
                 android:layout_height="60dp"
-                android:layout_margin="8dp"
                 android:layout_width="60dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/btn_ripple"
+                android:contentDescription="@string/cnt_sound_image"
                 android:onClick="makeAnimalSound"
                 android:src="@drawable/ic_sound"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvScientificNameLabel"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:layout_width="match_parent"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/prompt"
                 android:text="@string/scientific_name"
                 android:textAllCaps="true"
                 android:textSize="16sp"
@@ -80,22 +80,22 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvScientificName"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
+                android:fontFamily="@font/prompt"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@id/tvScientificNameLabel"
                 app:layout_constraintStart_toStartOf="@id/tvScientificNameLabel"
                 app:layout_constraintTop_toBottomOf="@id/tvScientificNameLabel" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvDietLabel"
                 android:layout_height="wrap_content"
+                android:layout_width="0dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="8dp"
-                android:layout_width="0dp"
+                android:fontFamily="@font/prompt"
                 android:text="@string/diet"
                 android:textAllCaps="true"
                 android:textSize="16sp"
@@ -105,22 +105,22 @@
                 app:layout_constraintTop_toBottomOf="@id/tvScientificName" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvDiet"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
+                android:fontFamily="@font/prompt"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@id/tvDietLabel"
                 app:layout_constraintStart_toStartOf="@id/tvDietLabel"
                 app:layout_constraintTop_toBottomOf="@id/tvDietLabel" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvStatusLabel"
                 android:layout_height="wrap_content"
+                android:layout_width="0dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="8dp"
-                android:layout_width="0dp"
+                android:fontFamily="@font/prompt"
                 android:text="@string/status"
                 android:textAllCaps="true"
                 android:textSize="16sp"
@@ -130,22 +130,22 @@
                 app:layout_constraintTop_toBottomOf="@id/tvDiet" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvStatus"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
+                android:fontFamily="@font/prompt"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@id/tvStatusLabel"
                 app:layout_constraintStart_toStartOf="@id/tvStatusLabel"
                 app:layout_constraintTop_toBottomOf="@id/tvStatusLabel" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvRangeLabel"
                 android:layout_height="wrap_content"
+                android:layout_width="0dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="8dp"
-                android:layout_width="0dp"
+                android:fontFamily="@font/prompt"
                 android:text="@string/range"
                 android:textAllCaps="true"
                 android:textSize="16sp"
@@ -155,22 +155,22 @@
                 app:layout_constraintTop_toBottomOf="@id/tvStatus" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvRange"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
+                android:fontFamily="@font/prompt"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@id/tvRangeLabel"
                 app:layout_constraintStart_toStartOf="@id/tvRangeLabel"
                 app:layout_constraintTop_toBottomOf="@id/tvRangeLabel" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvHabitatLabel"
                 android:layout_height="wrap_content"
+                android:layout_width="0dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="8dp"
-                android:layout_width="0dp"
+                android:fontFamily="@font/prompt"
                 android:text="@string/habitat"
                 android:textAllCaps="true"
                 android:textSize="16sp"
@@ -180,22 +180,22 @@
                 app:layout_constraintTop_toBottomOf="@id/tvRange" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvHabitat"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
+                android:fontFamily="@font/prompt"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@id/tvHabitatLabel"
                 app:layout_constraintStart_toStartOf="@id/tvHabitatLabel"
                 app:layout_constraintTop_toBottomOf="@id/tvHabitatLabel" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvViewingHintsLabel"
                 android:layout_height="wrap_content"
+                android:layout_width="0dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="8dp"
-                android:layout_width="0dp"
+                android:fontFamily="@font/prompt"
                 android:text="@string/viewing_hints"
                 android:textAllCaps="true"
                 android:textSize="16sp"
@@ -205,10 +205,10 @@
                 app:layout_constraintTop_toBottomOf="@id/tvHabitat" />
 
             <TextView
-                android:fontFamily="@font/prompt"
                 android:id="@+id/tvViewingHints"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
+                android:fontFamily="@font/prompt"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@id/tvViewingHintsLabel"
                 app:layout_constraintStart_toStartOf="@id/tvViewingHintsLabel"
