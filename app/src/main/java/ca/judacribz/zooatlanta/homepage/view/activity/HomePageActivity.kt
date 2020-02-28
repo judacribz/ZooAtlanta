@@ -9,29 +9,29 @@ import androidx.lifecycle.Observer
 import ca.judacribz.zooatlanta.R
 import ca.judacribz.zooatlanta.animals.Animals
 import ca.judacribz.zooatlanta.categories.Categories
+import ca.judacribz.zooatlanta.databinding.ActivityHomepageBinding
 import ca.judacribz.zooatlanta.global.view.activity.BaseActivity
 import ca.judacribz.zooatlanta.global.view.activity.WebViewActivity
 import ca.judacribz.zooatlanta.homepage.model.BasePost
 import ca.judacribz.zooatlanta.homepage.viewmodel.HomePageViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import kotlinx.android.synthetic.main.activity_homepage.btnHomepageLearnMore
-import kotlinx.android.synthetic.main.activity_homepage.clHomepageAnimalPost
-import kotlinx.android.synthetic.main.activity_homepage.ivHomepageAnimalImage
-import kotlinx.android.synthetic.main.activity_homepage.tvHomepageAnimalDescription
-import kotlinx.android.synthetic.main.activity_homepage.tvHomepageAnimalHeadline
 
 class HomePageActivity : BaseActivity() {
 
     private val _homePageViewModel: HomePageViewModel by viewModels()
 
+    private lateinit var _binding: ActivityHomepageBinding
     private lateinit var _animFadeOut: Animation
     private lateinit var _animFadeIn: Animation
 
     private var _mainAnimalPosts: List<BasePost>? = null
     private var _post: BasePost? = null
 
-    override fun getLayoutResource(): Int = R.layout.activity_homepage
+    override fun getBoundView(): View {
+        _binding = ActivityHomepageBinding.inflate(layoutInflater)
+        return _binding.root
+    }
 
     override fun onPostCreateView() {
         _animFadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
@@ -60,17 +60,17 @@ class HomePageActivity : BaseActivity() {
             }
 
             override fun onAnimationEnd(animation: Animation?) {
-                Glide
-                    .with(this@HomePageActivity)
-                    .load(_post!!.imageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .into(ivHomepageAnimalImage)
-
-                tvHomepageAnimalHeadline.text = _post!!.headline
-                tvHomepageAnimalDescription.text = _post!!.shortDescription
-                btnHomepageLearnMore.visibility = View.VISIBLE
-
-                clHomepageAnimalPost.startAnimation(_animFadeIn)
+                with(_binding) {
+                    Glide
+                        .with(this@HomePageActivity)
+                        .load(_post!!.imageUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .into(ivAnimalImage)
+                    tvAnimalHeadline.text = _post!!.headline
+                    tvAnimalDescription.text = _post!!.shortDescription
+                    btnLearnMore.visibility = View.VISIBLE
+                    clAnimalPost.startAnimation(_animFadeIn)
+                }
             }
 
             override fun onAnimationStart(animation: Animation?) {
@@ -91,7 +91,7 @@ class HomePageActivity : BaseActivity() {
         _homePageViewModel.postIndex.observe(this, Observer { index ->
             _mainAnimalPosts?.get(index)?.let {
                 _post = it
-                clHomepageAnimalPost.startAnimation(_animFadeOut)
+                _binding.clAnimalPost.startAnimation(_animFadeOut)
             }
         })
     }

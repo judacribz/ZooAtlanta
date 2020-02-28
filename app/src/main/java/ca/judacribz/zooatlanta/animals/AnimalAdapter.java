@@ -1,9 +1,6 @@
 package ca.judacribz.zooatlanta.animals;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import ca.judacribz.zooatlanta.R;
-import ca.judacribz.zooatlanta.animal_details.AnimalDetails;
 import ca.judacribz.zooatlanta.models.Animal;
 
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
@@ -77,20 +72,16 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvRange = itemView.findViewById(R.id.tvRange);
 
-            ivAnimalImage = itemView.findViewById(R.id.ivHomepageAnimalImage);
+            ivAnimalImage = itemView.findViewById(R.id.ivAnimalImage);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(v -> {
+                android.content.Intent intent = new android.content.Intent(v.getContext(), ca.judacribz.zooatlanta.animal_details.AnimalDetails.class);
+                android.os.Bundle bundle = new android.os.Bundle();
 
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), AnimalDetails.class);
-                    Bundle bundle = new Bundle();
+                bundle.putParcelable(EXTRA_ANIMAL, animal);
+                intent.putExtras(bundle);
 
-                    bundle.putParcelable(EXTRA_ANIMAL, animal);
-                    intent.putExtras(bundle);
-
-                    v.getContext().startActivity(intent);
-                }
+                v.getContext().startActivity(intent);
             });
         }
 
@@ -111,19 +102,16 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         }
 
         void setAnimalImage(final String url) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        animalBmps.put(
-                                aniName,
-                                bmp = BitmapFactory.decodeStream(new URL(url).openStream())
-                        );
-                        setAnimalImage(bmp);
+            new Thread(() -> {
+                try {
+                    animalBmps.put(
+                            aniName,
+                            bmp = android.graphics.BitmapFactory.decodeStream(new java.net.URL(url).openStream())
+                    );
+                    setAnimalImage(bmp);
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }).start();
         }
