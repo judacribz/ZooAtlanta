@@ -15,11 +15,11 @@ import ca.judacribz.zooatlanta.homepage.model.BasePost
 import ca.judacribz.zooatlanta.homepage.viewmodel.HomePageViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import kotlinx.android.synthetic.main.activity_homepage.btnHomepageLearnMore
-import kotlinx.android.synthetic.main.activity_homepage.clHomepageAnimalPost
-import kotlinx.android.synthetic.main.activity_homepage.ivHomepageAnimalImage
-import kotlinx.android.synthetic.main.activity_homepage.tvHomepageAnimalDescription
-import kotlinx.android.synthetic.main.activity_homepage.tvHomepageAnimalHeadline
+import kotlinx.android.synthetic.main.activity_homepage.incHomepageAnimalPost
+import kotlinx.android.synthetic.main.view_animal_post.btnAnimalPostLearnMore
+import kotlinx.android.synthetic.main.view_animal_post.ivAnimalPostImage
+import kotlinx.android.synthetic.main.view_animal_post.tvAnimalPostDescription
+import kotlinx.android.synthetic.main.view_animal_post.tvAnimalPostHeadline
 
 class HomePageActivity : BaseActivity() {
 
@@ -64,13 +64,13 @@ class HomePageActivity : BaseActivity() {
                     .with(this@HomePageActivity)
                     .load(_post!!.imageUrl)
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .into(ivHomepageAnimalImage)
+                    .into(ivAnimalPostImage)
 
-                tvHomepageAnimalHeadline.text = _post!!.headline
-                tvHomepageAnimalDescription.text = _post!!.shortDescription
-                btnHomepageLearnMore.visibility = View.VISIBLE
+                tvAnimalPostHeadline.text = _post!!.headline
+                tvAnimalPostDescription.text = _post!!.shortDescription
+                btnAnimalPostLearnMore.visibility = View.VISIBLE
 
-                clHomepageAnimalPost.startAnimation(_animFadeIn)
+                incHomepageAnimalPost.startAnimation(_animFadeIn)
             }
 
             override fun onAnimationStart(animation: Animation?) {
@@ -91,7 +91,7 @@ class HomePageActivity : BaseActivity() {
         _homePageViewModel.postIndex.observe(this, Observer { index ->
             _mainAnimalPosts?.get(index)?.let {
                 _post = it
-                clHomepageAnimalPost.startAnimation(_animFadeOut)
+                incHomepageAnimalPost.startAnimation(_animFadeOut)
             }
         })
     }

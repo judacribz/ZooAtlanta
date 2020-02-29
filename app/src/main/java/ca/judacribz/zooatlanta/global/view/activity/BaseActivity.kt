@@ -14,9 +14,9 @@ import ca.judacribz.zooatlanta.AppSession
 import ca.judacribz.zooatlanta.R
 import ca.judacribz.zooatlanta.global.view.dialog.ProgressDialog
 import ca.judacribz.zooatlanta.global.viewmodel.BaseViewModel
-import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.view_schedule.tvScheduleLastAdmin
 import kotlinx.android.synthetic.main.view_schedule.tvScheduleSchedule
+import kotlinx.android.synthetic.main.view_toolbar.toolbar
 
 abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppCompatActivity() {
 

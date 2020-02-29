@@ -10,7 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import ca.judacribz.zooatlanta.R
 import ca.judacribz.zooatlanta.global.constants.ZOO_ATLANTA_URL
-import kotlinx.android.synthetic.main.activity_web_view.web_view_wv_page_holder
+import kotlinx.android.synthetic.main.activity_web_view.wvWebViewContent
 
 class WebViewActivity : BaseActivity(true) {
 
@@ -33,8 +33,8 @@ class WebViewActivity : BaseActivity(true) {
     }
 
     override fun onBackPressed() {
-        if (web_view_wv_page_holder.canGoBack()) {
-            web_view_wv_page_holder.goBack()
+        if (wvWebViewContent.canGoBack()) {
+            wvWebViewContent.goBack()
             handleMenuItems()
         } else {
             super.onBackPressed()
@@ -48,7 +48,7 @@ class WebViewActivity : BaseActivity(true) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.zoo_atlanta_web_view_act_forward -> web_view_wv_page_holder.goForward()
+            R.id.zoo_atlanta_web_view_act_forward -> wvWebViewContent.goForward()
         }
         handleMenuItems()
         return super.onOptionsItemSelected(item)
@@ -62,14 +62,14 @@ class WebViewActivity : BaseActivity(true) {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setUpWebView() {
-        web_view_wv_page_holder.settings.apply {
+        wvWebViewContent.settings.apply {
             javaScriptEnabled = true
             allowContentAccess = true
             domStorageEnabled = true
             javaScriptCanOpenWindowsAutomatically = true
         }
 
-        web_view_wv_page_holder.webViewClient = object : WebViewClient() {
+        wvWebViewContent.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
                 request: WebResourceRequest
@@ -85,13 +85,13 @@ class WebViewActivity : BaseActivity(true) {
             }
         }
 
-        web_view_wv_page_holder.loadUrl(intent.getStringExtra(EXTRA_URL))
+        wvWebViewContent.loadUrl(intent.getStringExtra(EXTRA_URL))
     }
 
     private fun handleMenuItems() {
         _menu?.apply {
             findItem(R.id.zoo_atlanta_web_view_act_forward).isVisible =
-                web_view_wv_page_holder.canGoForward()
+                wvWebViewContent.canGoForward()
         }
     }
 }
