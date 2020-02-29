@@ -7,12 +7,12 @@
     tools:context=".global.view.activity.WebViewActivity">
 
     <include
-        android:id="@+id/web_view_inc_toolbar"
-        layout="@layout/toolbar"
+        android:id="@+id/incWebViewToolbar"
+        layout="@layout/view_toolbar"
         app:layout_constraintTop_toTopOf="parent" />
 
     <WebView
-        android:id="@+id/web_view_wv_page_holder"
+        android:id="@+id/wvWebViewContent"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
