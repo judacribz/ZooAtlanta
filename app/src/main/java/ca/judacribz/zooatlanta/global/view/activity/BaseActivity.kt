@@ -7,7 +7,6 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -50,7 +49,7 @@ abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppComp
     }
 
     private fun setUpUi() {
-        setContentView(getBoundView())
+        setContentView(getLayoutResource())
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
             setDisplayShowTitleEnabled(false)
@@ -75,7 +74,7 @@ abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppComp
         unregisterNetworkCallback()
     }
 
-    protected abstract fun getBoundView(): View
+    protected abstract fun getLayoutResource(): Int
 
     protected abstract fun onPostCreateView()
 

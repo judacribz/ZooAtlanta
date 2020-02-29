@@ -5,13 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import ca.judacribz.zooatlanta.R
-import ca.judacribz.zooatlanta.databinding.ActivityWebViewBinding
 import ca.judacribz.zooatlanta.global.constants.ZOO_ATLANTA_URL
+import kotlinx.android.synthetic.main.activity_web_view.web_view_wv_page_holder
 
 class WebViewActivity : BaseActivity(true) {
 
@@ -25,21 +24,17 @@ class WebViewActivity : BaseActivity(true) {
         }
     }
 
-    private lateinit var _binding: ActivityWebViewBinding
     private var _menu: Menu? = null
 
-    override fun getBoundView(): View {
-        _binding = ActivityWebViewBinding.inflate(layoutInflater)
-        return _binding.root
-    }
+    override fun getLayoutResource(): Int = R.layout.activity_web_view
 
     override fun onPostCreateView() {
         setUpWebView()
     }
 
     override fun onBackPressed() {
-        if (_binding.wvPageHolder.canGoBack()) {
-            _binding.wvPageHolder.goBack()
+        if (web_view_wv_page_holder.canGoBack()) {
+            web_view_wv_page_holder.goBack()
             handleMenuItems()
         } else {
             super.onBackPressed()
@@ -52,9 +47,9 @@ class WebViewActivity : BaseActivity(true) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.zoo_atlanta_web_view_act_forward)
-            _binding.wvPageHolder.goForward()
-
+        when (item.itemId) {
+            R.id.zoo_atlanta_web_view_act_forward -> web_view_wv_page_holder.goForward()
+        }
         handleMenuItems()
         return super.onOptionsItemSelected(item)
     }
@@ -67,36 +62,36 @@ class WebViewActivity : BaseActivity(true) {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setUpWebView() {
-        with(_binding.wvPageHolder) {
-            settings.apply {
-                javaScriptEnabled = true
-                allowContentAccess = true
-                domStorageEnabled = true
-                javaScriptCanOpenWindowsAutomatically = true
-            }
-
-            webViewClient = object : WebViewClient() {
-                override fun shouldOverrideUrlLoading(
-                    view: WebView,
-                    request: WebResourceRequest
-                ): Boolean {
-                    val url = request.url.toString()
-                    if (url.contains(ZOO_ATLANTA_URL)) {
-                        view.loadUrl(url)
-                        handleMenuItems()
-                        return false
-                    }
-
-                    return super.shouldOverrideUrlLoading(view, request)
-                }
-            }
-
-            loadUrl(intent.getStringExtra(EXTRA_URL))
+        web_view_wv_page_holder.settings.apply {
+            javaScriptEnabled = true
+            allowContentAccess = true
+            domStorageEnabled = true
+            javaScriptCanOpenWindowsAutomatically = true
         }
+
+        web_view_wv_page_holder.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView,
+                request: WebResourceRequest
+            ): Boolean {
+                val url = request.url.toString()
+                if (url.contains(ZOO_ATLANTA_URL)) {
+                    view.loadUrl(url)
+                    handleMenuItems()
+                    return false
+                }
+
+                return super.shouldOverrideUrlLoading(view, request)
+            }
+        }
+
+        web_view_wv_page_holder.loadUrl(intent.getStringExtra(EXTRA_URL))
     }
 
     private fun handleMenuItems() {
-        _menu?.findItem(R.id.zoo_atlanta_web_view_act_forward)?.isVisible =
-            _binding.wvPageHolder.canGoForward()
+        _menu?.apply {
+            findItem(R.id.zoo_atlanta_web_view_act_forward).isVisible =
+                web_view_wv_page_holder.canGoForward()
+        }
     }
 }
