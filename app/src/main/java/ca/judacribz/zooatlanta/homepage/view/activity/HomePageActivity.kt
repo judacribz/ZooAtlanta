@@ -2,47 +2,25 @@ package ca.judacribz.zooatlanta.homepage.view.activity
 
 import android.content.Intent
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import ca.judacribz.zooatlanta.R
 import ca.judacribz.zooatlanta.animals.Animals
 import ca.judacribz.zooatlanta.categories.Categories
-import ca.judacribz.zooatlanta.global.view.activity.BaseActivity
-import ca.judacribz.zooatlanta.global.view.activity.WebViewActivity
-import ca.judacribz.zooatlanta.homepage.model.BasePost
+import ca.judacribz.zooatlanta.global.base.BaseActivity
+import ca.judacribz.zooatlanta.global.common.activity.WebViewActivity
 import ca.judacribz.zooatlanta.homepage.viewmodel.HomePageViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import kotlinx.android.synthetic.main.activity_homepage.incHomepageAnimalPost
-import kotlinx.android.synthetic.main.view_animal_post.btnAnimalPostLearnMore
-import kotlinx.android.synthetic.main.view_animal_post.ivAnimalPostImage
-import kotlinx.android.synthetic.main.view_animal_post.tvAnimalPostDescription
-import kotlinx.android.synthetic.main.view_animal_post.tvAnimalPostHeadline
+import kotlinx.android.synthetic.main.activity_homepage.apHomepageCustom
 
 class HomePageActivity : BaseActivity() {
 
     private val _homePageViewModel: HomePageViewModel by viewModels()
 
-    private lateinit var _animFadeOut: Animation
-    private lateinit var _animFadeIn: Animation
-
-    private var _mainAnimalPosts: List<BasePost>? = null
-    private var _post: BasePost? = null
-
     override fun getLayoutResource(): Int = R.layout.activity_homepage
 
     override fun onPostCreateView() {
-        _animFadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
-        _animFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-
-        setUpMainPostAnimation()
+        apHomepageCustom.bind { url -> WebViewActivity.openActivity(this, url) }
         setUpObservers()
-    }
-
-    fun learnMore(@Suppress("UNUSED_PARAMETER") view: View) {
-        _homePageViewModel.learnMoreUrl?.let { WebViewActivity.openActivity(this, it) }
     }
 
     fun goToCategories(@Suppress("UNUSED_PARAMETER") view: View?) {
@@ -53,46 +31,14 @@ class HomePageActivity : BaseActivity() {
         startActivity(Intent(this, Animals::class.java))
     }
 
-    private fun setUpMainPostAnimation() {
-        _animFadeOut.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-                // NOP
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
-                Glide
-                    .with(this@HomePageActivity)
-                    .load(_post!!.imageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .into(ivAnimalPostImage)
-
-                tvAnimalPostHeadline.text = _post!!.headline
-                tvAnimalPostDescription.text = _post!!.shortDescription
-                btnAnimalPostLearnMore.visibility = View.VISIBLE
-
-                incHomepageAnimalPost.startAnimation(_animFadeIn)
-            }
-
-            override fun onAnimationStart(animation: Animation?) {
-                // NOP
-            }
-        })
-    }
-
     private fun setUpObservers() {
-        baseViewModel.hasNetworkLiveData.observe(this, Observer {
+        globalViewModel.hasNetworkLiveData.observe(this, Observer {
             if (it) _homePageViewModel.pullData()
         })
 
-        _homePageViewModel.mainPosts.observe(this, Observer {
-            if (it.isNotEmpty()) _mainAnimalPosts = it
-        })
-
-        _homePageViewModel.postIndex.observe(this, Observer { index ->
-            _mainAnimalPosts?.get(index)?.let {
-                _post = it
-                incHomepageAnimalPost.startAnimation(_animFadeOut)
-            }
+        _homePageViewModel.post.observe(this, Observer { post ->
+            apHomepageCustom.post = post
+            apHomepageCustom.startAnimation()
         })
     }
 }

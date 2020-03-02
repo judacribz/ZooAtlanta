@@ -2,11 +2,17 @@ package ca.judacribz.zooatlanta.homepage.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ca.judacribz.zooatlanta.global.constants.*
-import ca.judacribz.zooatlanta.global.util.extractUrl
-import ca.judacribz.zooatlanta.global.util.getFirstClassByTag
-import ca.judacribz.zooatlanta.global.util.getFirstElementByTag
-import ca.judacribz.zooatlanta.global.viewmodel.ViewModel
+import ca.judacribz.zooatlanta.global.base.BaseViewModel
+import ca.judacribz.zooatlanta.global.common.constants.ATTR_STYLE
+import ca.judacribz.zooatlanta.global.common.constants.CLASS_HERO_IMAGE
+import ca.judacribz.zooatlanta.global.common.constants.CLASS_SLIDE
+import ca.judacribz.zooatlanta.global.common.constants.TAG_H2
+import ca.judacribz.zooatlanta.global.common.constants.TAG_P
+import ca.judacribz.zooatlanta.global.common.constants.ZOO_ATLANTA_URL
+import ca.judacribz.zooatlanta.global.common.util.extractImageUrl
+import ca.judacribz.zooatlanta.global.common.util.getFirstATagUrl
+import ca.judacribz.zooatlanta.global.common.util.getFirstElementByClass
+import ca.judacribz.zooatlanta.global.common.util.getFirstElementByTagText
 import ca.judacribz.zooatlanta.homepage.model.BasePost
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -15,33 +21,20 @@ import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
-class HomePageViewModel : ViewModel() {
+class HomePageViewModel : BaseViewModel() {
     companion object {
         private const val DURATION_IMAGE_CHANGE: Long = 2000
     }
 
-    private val _mainPosts = MutableLiveData(ArrayList<BasePost>())
-    val mainPosts: MutableLiveData<ArrayList<BasePost>>
-        get() = _mainPosts
-    private val _postIndex = MutableLiveData(0)
-    val postIndex: LiveData<Int>
-        get() = _postIndex
+    private val _post = MutableLiveData<BasePost>()
+    val post: LiveData<BasePost>
+        get() = _post
 
-    var numPosts = 0
-
-    var cyclePosts: Boolean = false
+    private val _mainPosts = ArrayList<BasePost>()
+    private var _cyclePosts: Boolean = false
         set(value) {
             field = value
             if (value) cycleAnimalPosts()
-        }
-    val learnMoreUrl: String?
-        get() {
-            _mainPosts.value?.let {
-                if (it.isNotEmpty())
-                    return it[_postIndex.value!!].learnMoreUrl
-            }
-
-            return null
         }
 
     fun pullData() = bgIOScope.launch(Dispatchers.IO) {
@@ -55,32 +48,26 @@ class HomePageViewModel : ViewModel() {
     private suspend fun retrieveMainImages(zooDocument: Document) = withContext(Dispatchers.IO) {
         zooDocument.getElementsByClass(CLASS_SLIDE)?.forEach {
             launch {
-                val imageUrl = extractUrl(it.getFirstClassByTag(CLASS_HERO_IMAGE)?.attr(ATTR_STYLE))
-                val headline = it.getFirstElementByTag(TAG_H2)?.text()
-                val shortDescription = it.getFirstElementByTag(TAG_P)?.text()
-                val learMoreUrl = it.getFirstElementByTag(TAG_A)?.attr(ATTR_HREF)
+                val imageUrl =
+                    extractImageUrl(it.getFirstElementByClass(CLASS_HERO_IMAGE)?.attr(ATTR_STYLE))
+                        ?: return@launch
+                val headline = it.getFirstElementByTagText(TAG_H2) ?: return@launch
+                val shortDescription = it.getFirstElementByTagText(TAG_P) ?: return@launch
+                val learMoreUrl = it.getFirstATagUrl() ?: return@launch
 
-                _mainPosts.apply {
-                    synchronized(this) {
-                        value!!.add(BasePost(imageUrl, headline, shortDescription, learMoreUrl))
-                    }
-                    postValue(value!!)
-                    numPosts = value!!.size
+                _mainPosts.add(BasePost(imageUrl, headline, shortDescription, learMoreUrl))
 
-                    if (cyclePosts.not())
-                        cyclePosts = true
-                }
+                if (_cyclePosts.not()) _cyclePosts = true
             }
         }
     }
 
     private fun cycleAnimalPosts() {
-        var i: Int = _postIndex.value!!
+        var postIndex = 0
         bgDefaultScope.launch(Dispatchers.IO) {
-            while (cyclePosts) {
-                synchronized(this) {
-                    _postIndex.postValue(synchronized(this) { i++ }.rem(numPosts))
-                }
+            while (_cyclePosts) {
+                _post.postValue(_mainPosts[postIndex.rem(_mainPosts.size)])
+                synchronized(this) { postIndex++ }
                 delay(DURATION_IMAGE_CHANGE)
             }
         }
