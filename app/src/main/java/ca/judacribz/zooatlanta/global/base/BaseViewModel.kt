@@ -1,11 +1,11 @@
-package ca.judacribz.zooatlanta.global.viewmodel
+package ca.judacribz.zooatlanta.global.base
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
-open class ViewModel : ViewModel() {
+open class BaseViewModel : ViewModel() {
 
     private val _job by lazyOf(Job())
 

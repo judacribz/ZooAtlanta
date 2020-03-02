@@ -1,17 +1,18 @@
-package ca.judacribz.zooatlanta.global.viewmodel
+package ca.judacribz.zooatlanta.global.common
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ca.judacribz.zooatlanta.global.constants.ID_HOURS_TODAY
-import ca.judacribz.zooatlanta.global.constants.ID_TODAY
-import ca.judacribz.zooatlanta.global.constants.ZOO_ATLANTA_URL
-import ca.judacribz.zooatlanta.global.model.Schedule
+import ca.judacribz.zooatlanta.global.base.BaseViewModel
+import ca.judacribz.zooatlanta.global.common.constants.ID_HOURS_TODAY
+import ca.judacribz.zooatlanta.global.common.constants.ID_TODAY
+import ca.judacribz.zooatlanta.global.common.constants.ZOO_ATLANTA_URL
+import ca.judacribz.zooatlanta.global.common.model.Schedule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 
-class BaseViewModel : ViewModel() {
+class GlobalViewModel : BaseViewModel() {
 
     private val _hasNetworkLiveData = MutableLiveData<Boolean>()
     val hasNetworkLiveData: LiveData<Boolean>

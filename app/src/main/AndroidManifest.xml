@@ -13,8 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".global.view.activity.BaseActivity" />
-        <activity android:name=".global.view.activity.WebViewActivity" />
+        <activity android:name=".global.base.BaseActivity" />
+        <activity android:name=".global.common.activity.WebViewActivity" />
         <activity android:name=".animal_details.AnimalDetails" />
         <activity android:name=".animals.Animals" />
         <activity android:name=".categories.Categories" />

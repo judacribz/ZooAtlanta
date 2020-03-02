@@ -1,4 +1,4 @@
-package ca.judacribz.zooatlanta.global.constants
+package ca.judacribz.zooatlanta.global.common.constants
 
 const val ZOO_ATLANTA_URL = "https://zooatlanta.org/"
 

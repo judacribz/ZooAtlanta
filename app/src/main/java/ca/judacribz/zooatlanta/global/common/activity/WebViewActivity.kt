@@ -1,4 +1,4 @@
-package ca.judacribz.zooatlanta.global.view.activity
+package ca.judacribz.zooatlanta.global.common.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,13 +9,14 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import ca.judacribz.zooatlanta.R
-import ca.judacribz.zooatlanta.global.constants.ZOO_ATLANTA_URL
+import ca.judacribz.zooatlanta.global.base.BaseActivity
+import ca.judacribz.zooatlanta.global.common.constants.ZOO_ATLANTA_URL
 import kotlinx.android.synthetic.main.activity_web_view.wvWebViewContent
 
 class WebViewActivity : BaseActivity(true) {
 
     companion object {
-        private const val EXTRA_URL = "ca.judacribz.zooatlanta.global.view.activity.EXTRA_URL"
+        private const val EXTRA_URL = "ca.judacribz.zooatlanta.global.common.activity.EXTRA_URL"
         fun openActivity(context: Context, url: String) {
             Intent(context, WebViewActivity::class.java).apply {
                 putExtra(EXTRA_URL, url)

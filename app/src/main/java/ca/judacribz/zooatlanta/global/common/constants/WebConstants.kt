@@ -1,4 +1,4 @@
-package ca.judacribz.zooatlanta.global.constants
+package ca.judacribz.zooatlanta.global.common.constants
 
 const val TAG_H2 = "h2"
 const val TAG_P = "p"

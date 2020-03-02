@@ -1,5 +1,6 @@
-package ca.judacribz.zooatlanta.global.view.activity
+package ca.judacribz.zooatlanta.global.base
 
+import android.app.Dialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
@@ -12,16 +13,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import ca.judacribz.zooatlanta.AppSession
 import ca.judacribz.zooatlanta.R
-import ca.judacribz.zooatlanta.global.view.dialog.ProgressDialog
-import ca.judacribz.zooatlanta.global.viewmodel.BaseViewModel
+import ca.judacribz.zooatlanta.global.common.GlobalViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.synthetic.main.dialog_progress.ivProgressGif
+import kotlinx.android.synthetic.main.dialog_progress.tvProgressLoading
 import kotlinx.android.synthetic.main.view_schedule.tvScheduleLastAdmin
 import kotlinx.android.synthetic.main.view_schedule.tvScheduleSchedule
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppCompatActivity() {
 
     companion object {
-        private val NETWORK_REQUEST: NetworkRequest by lazy {
+        private const val DOT_CYCLE_DIVISOR = 4
+        private const val LOAD_DELAY = 800L
+
+        private val NETWORK_REQUEST by lazy {
             NetworkRequest.Builder().apply {
                 addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                 addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
@@ -36,7 +49,7 @@ abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppComp
     private val _progressDialog: ProgressDialog by lazy { ProgressDialog(this) }
     private var _unregisteredCallback = false
 
-    protected val baseViewModel: BaseViewModel by viewModels()
+    protected val globalViewModel: GlobalViewModel by viewModels()
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,11 +96,11 @@ abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppComp
     fun hideLoading() = _progressDialog.dismiss()
 
     private fun setUpObservers() {
-        baseViewModel.hasNetworkLiveData.observe(this, Observer {
-            if (it && AppSession.schedule == null) baseViewModel.retrieveSchedule()
+        globalViewModel.hasNetworkLiveData.observe(this, Observer {
+            if (it && AppSession.schedule == null) globalViewModel.retrieveSchedule()
         })
 
-        baseViewModel.scheduleLiveData.observe(this, Observer { schedule ->
+        globalViewModel.scheduleLiveData.observe(this, Observer { schedule ->
             AppSession.schedule = schedule
 
             tvScheduleSchedule.text = schedule.admissionTime
@@ -100,7 +113,7 @@ abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppComp
             super.onAvailable(network)
             if (isNetworkActive()) {
                 unregisterNetworkCallback()
-                baseViewModel.setNetwork()
+                globalViewModel.setNetwork()
                 hideLoading()
             }
         }
@@ -134,6 +147,55 @@ abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppComp
                 _unregisteredCallback = true
                 _connectivityManager.unregisterNetworkCallback(_connectivityCallback)
             }
+        }
+    }
+
+    inner class ProgressDialog(context: Context) : Dialog(context) {
+
+        private val _networkLoadingText: String by lazy {
+            "   ${context.getString(R.string.searching_for_network)}"
+        }
+        private val _loadingTextLength: Int by lazy {
+            _networkLoadingText.length
+        }
+        private var _networkLoading = false
+
+        init {
+            setCancelable(false)
+            setContentView(R.layout.dialog_progress)
+
+            Glide.with(context)
+                .load(R.drawable.loading)
+                .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE))
+                .into(ivProgressGif)
+        }
+
+        override fun dismiss() {
+            _networkLoading = false
+            super.dismiss()
+        }
+
+        fun show(loadingText: String) {
+            tvProgressLoading.text = loadingText
+            super.show()
+        }
+
+        fun showNetworkLoading() {
+            _networkLoading = true
+            var i = Int.MAX_VALUE
+            GlobalScope.launch {
+                do {
+                    val offset = i--.rem(DOT_CYCLE_DIVISOR)
+                    withContext(Dispatchers.Main) {
+                        tvProgressLoading.text = _networkLoadingText.substring(
+                            offset,
+                            _loadingTextLength - offset
+                        )
+                    }
+                    delay(LOAD_DELAY)
+                } while (_networkLoading)
+            }
+            super.show()
         }
     }
 }

@@ -16,12 +16,10 @@
         android:layout_width="match_parent"
         android:background="@android:color/black" />
 
-    <!-- TODO: update to custom view -->
-    <include
-        android:id="@+id/incHomepageAnimalPost"
+    <ca.judacribz.zooatlanta.homepage.view.custom.AnimalPosts
+        android:id="@+id/apHomepageCustom"
         android:layout_height="@dimen/constraint_zero"
         android:layout_width="match_parent"
-        layout="@layout/view_animal_post"
         app:layout_constraintBottom_toTopOf="@id/btnHomepageTickets"
         app:layout_constraintTop_toBottomOf="@id/incHomepageToolbar" />
 
