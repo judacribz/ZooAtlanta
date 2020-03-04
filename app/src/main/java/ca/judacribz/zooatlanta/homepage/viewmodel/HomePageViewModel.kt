@@ -2,7 +2,8 @@ package ca.judacribz.zooatlanta.homepage.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ca.judacribz.zooatlanta.global.base.BaseViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import ca.judacribz.zooatlanta.global.common.constants.ATTR_STYLE
 import ca.judacribz.zooatlanta.global.common.constants.CLASS_HERO_IMAGE
 import ca.judacribz.zooatlanta.global.common.constants.CLASS_SLIDE
@@ -17,11 +18,10 @@ import ca.judacribz.zooatlanta.homepage.model.BasePost
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
-class HomePageViewModel : BaseViewModel() {
+class HomePageViewModel : ViewModel() {
     companion object {
         private const val DURATION_IMAGE_CHANGE: Long = 2000
     }
@@ -37,17 +37,14 @@ class HomePageViewModel : BaseViewModel() {
             if (value) cycleAnimalPosts()
         }
 
-    fun pullData() = bgIOScope.launch(Dispatchers.IO) {
+    fun pullData() = viewModelScope.launch(Dispatchers.IO) {
         val zooDocument = Jsoup.connect(ZOO_ATLANTA_URL).get() ?: return@launch
-
-        launch(Dispatchers.IO) {
-            retrieveMainImages(zooDocument)
-        }
+        retrieveMainImages(zooDocument)
     }
 
-    private suspend fun retrieveMainImages(zooDocument: Document) = withContext(Dispatchers.IO) {
+    private fun retrieveMainImages(zooDocument: Document) {
         zooDocument.getElementsByClass(CLASS_SLIDE)?.forEach {
-            launch {
+            viewModelScope.launch(Dispatchers.Default) {
                 val imageUrl =
                     extractImageUrl(it.getFirstElementByClass(CLASS_HERO_IMAGE)?.attr(ATTR_STYLE))
                         ?: return@launch
@@ -64,7 +61,7 @@ class HomePageViewModel : BaseViewModel() {
 
     private fun cycleAnimalPosts() {
         var postIndex = 0
-        bgDefaultScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             while (_cyclePosts) {
                 _post.postValue(_mainPosts[postIndex.rem(_mainPosts.size)])
                 synchronized(this) { postIndex++ }

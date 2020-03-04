@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import ca.judacribz.zooatlanta.AppSession
 import ca.judacribz.zooatlanta.R
-import ca.judacribz.zooatlanta.global.common.GlobalViewModel
+import ca.judacribz.zooatlanta.global.common.viewmodel.GlobalViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
