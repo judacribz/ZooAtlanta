@@ -1,5 +1,5 @@
-<resources>
-    <string name="app_name">Week2Weekend</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Zoo Atlanta</string>
     <string name="number_of_species_here">Number of Species Here:</string>
     <string name="description">Description</string>
     <string name="view_schedule">VIEW SCHEDULE</string>
@@ -31,4 +31,8 @@
     <string name="habitat">Habitat</string>
     <string name="cnt_sound_image">Sound Image</string>
     <string name="category_file">category_file</string>
+    <string name="forward">forward</string>
+    <string name="cnt_zoo_atlanta_logo">Zoo Atlanta Logo</string>
+
+    <string name="searching_for_network" tools:ignore="TypographyEllipsis">Searching for Network...</string>
 </resources>
