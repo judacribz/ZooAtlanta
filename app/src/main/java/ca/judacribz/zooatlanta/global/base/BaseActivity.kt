@@ -63,7 +63,7 @@ abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppComp
 
     private fun setUpUi() {
         setContentView(getLayoutResource())
-        setSupportActionBar(toolbar)
+        toolbar?.let { setSupportActionBar(it) }
         supportActionBar?.apply {
             setDisplayShowTitleEnabled(false)
             if (showHomeIcon) {
@@ -77,8 +77,8 @@ abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppComp
     final override fun onStart() {
         super.onStart()
         AppSession.schedule?.run {
-            tvScheduleSchedule.text = admissionTime
-            tvScheduleLastAdmin.text = lastAdmission
+            tvScheduleSchedule?.text = admissionTime
+            tvScheduleLastAdmin?.text = lastAdmission
         }
     }
 
@@ -103,8 +103,8 @@ abstract class BaseActivity(private val showHomeIcon: Boolean = false) : AppComp
         globalViewModel.scheduleLiveData.observe(this, Observer { schedule ->
             AppSession.schedule = schedule
 
-            tvScheduleSchedule.text = schedule.admissionTime
-            tvScheduleLastAdmin.text = schedule.lastAdmission
+            tvScheduleSchedule?.text = schedule.admissionTime
+            tvScheduleLastAdmin?.text = schedule.lastAdmission
         })
     }
 

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    tools:context=".animal_details.AnimalDetails">
+    tools:context=".animal_details.AnimalDetailsActivity">
 
     <ImageView
-        android:id="@+id/ivHomepageAnimalImage"
+        android:id="@+id/ivAnimalDetailsMain"
         android:layout_height="250dp"
         android:layout_width="match_parent"
         android:contentDescription="@string/cnt_photo_of_animal"
@@ -31,41 +31,29 @@
         android:textColor="@android:color/white"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/ivHomepageAnimalImage"
-        app:layout_constraintStart_toStartOf="@id/ivHomepageAnimalImage" />
+        app:layout_constraintBottom_toBottomOf="@id/ivAnimalDetailsMain"
+        app:layout_constraintStart_toStartOf="@id/ivAnimalDetailsMain" />
 
     <TextView
-        android:id="@+id/tvHomepageAnimalDescription"
+        android:id="@+id/tvAnimalDetailsDescription"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_margin="8dp"
         android:fontFamily="@font/fjalla"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/ivHomepageAnimalImage" />
+        app:layout_constraintTop_toBottomOf="@id/ivAnimalDetailsMain" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_height="0dp"
         android:layout_width="match_parent"
         android:background="@drawable/rv_item_box"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvHomepageAnimalDescription">
+        app:layout_constraintTop_toBottomOf="@id/tvAnimalDetailsDescription">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/desciptionScroll"
+            android:id="@+id/descriptionScroll"
             android:layout_height="match_parent"
             android:layout_width="match_parent">
-
-            <ImageButton
-                android:id="@+id/ibtnSound"
-                android:layout_height="60dp"
-                android:layout_width="60dp"
-                android:layout_margin="8dp"
-                android:background="@drawable/btn_ripple"
-                android:contentDescription="@string/cnt_sound_image"
-                android:onClick="makeAnimalSound"
-                android:src="@drawable/ic_sound"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvScientificNameLabel"

@@ -10,7 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import ca.judacribz.zooatlanta.R
 import ca.judacribz.zooatlanta.global.base.BaseActivity
-import ca.judacribz.zooatlanta.global.common.constants.ZOO_ATLANTA_URL
+import ca.judacribz.zooatlanta.global.common.constants.URL_ZOO_ATLANTA
 import kotlinx.android.synthetic.main.activity_web_view.wvWebViewContent
 
 class WebViewActivity : BaseActivity(true) {
@@ -76,7 +76,7 @@ class WebViewActivity : BaseActivity(true) {
                 request: WebResourceRequest
             ): Boolean {
                 val url = request.url.toString()
-                if (url.contains(ZOO_ATLANTA_URL)) {
+                if (url.contains(URL_ZOO_ATLANTA)) {
                     view.loadUrl(url)
                     handleMenuItems()
                     return false
@@ -86,7 +86,7 @@ class WebViewActivity : BaseActivity(true) {
             }
         }
 
-        wvWebViewContent.loadUrl(intent.getStringExtra(EXTRA_URL))
+        wvWebViewContent.loadUrl(intent.getStringExtra(EXTRA_URL)!!)
     }
 
     private fun handleMenuItems() {

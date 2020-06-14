@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.judacribz.zooatlanta.global.common.constants.ID_HOURS_TODAY
 import ca.judacribz.zooatlanta.global.common.constants.ID_TODAY
-import ca.judacribz.zooatlanta.global.common.constants.ZOO_ATLANTA_URL
+import ca.judacribz.zooatlanta.global.common.constants.URL_ZOO_ATLANTA
 import ca.judacribz.zooatlanta.global.common.model.Schedule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +26,7 @@ class GlobalViewModel : ViewModel() {
     fun setNetwork() = _hasNetworkLiveData.postValue(true)
 
     fun retrieveSchedule() = viewModelScope.launch(Dispatchers.IO) {
-        val zooDocument = Jsoup.connect(ZOO_ATLANTA_URL).get() ?: return@launch
+        val zooDocument = Jsoup.connect(URL_ZOO_ATLANTA).get() ?: return@launch
         withContext(Dispatchers.Default) {
             val scheduleNode = zooDocument
                 .getElementById(ID_TODAY)

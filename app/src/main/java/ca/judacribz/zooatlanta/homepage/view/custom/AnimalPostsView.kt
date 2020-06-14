@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.view_animal_post.view.ivAnimalPostImage
 import kotlinx.android.synthetic.main.view_animal_post.view.tvAnimalPostDescription
 import kotlinx.android.synthetic.main.view_animal_post.view.tvAnimalPostHeadline
 
-class AnimalPosts @JvmOverloads constructor(
+class AnimalPostsView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

@@ -11,6 +11,18 @@ fun Element.getFirstATagUrl() = getFirstElementByTag(TAG_A)?.attr(ATTR_HREF)
 
 fun Element.getFirstElementByTagText(tag: String) = getFirstElementByTag(tag)?.text()
 
-fun Element.getFirstElementByTag(tag: String) = getElementsByTag(tag)[0] ?: null
+fun Element.getFirstElementByTag(tag: String): Element? = getElementsByTag(tag).first()
 
-fun Element.getFirstElementByClass(classId: String) = getElementsByClass(classId)[0] ?: null
+fun Element.getFirstElementByClass(classId: String): Element? = getElementsByClass(classId).first()
+
+fun Element.getFirstElementByClassText(classId: String) = getFirstElementByClass(classId)?.text()
+
+fun Element.getFirstElementByClass(vararg classId: String): Element? {
+    var element: Element? = this
+
+    classId.forEach {
+        element = element?.getFirstElementByClass(it)
+    }
+
+    return element
+}

@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    tools:context=".categories.Categories">
+    tools:context=".categories.CategoriesActivity">
 
-    <ListView
-        android:id="@+id/lvCategories"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategoriesList"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

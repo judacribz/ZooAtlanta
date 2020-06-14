@@ -5,8 +5,8 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import ca.judacribz.zooatlanta.R
-import ca.judacribz.zooatlanta.animals.Animals
-import ca.judacribz.zooatlanta.categories.Categories
+import ca.judacribz.zooatlanta.animals.AnimalsActivity
+import ca.judacribz.zooatlanta.categories.CategoriesActivity
 import ca.judacribz.zooatlanta.global.base.BaseActivity
 import ca.judacribz.zooatlanta.global.common.activity.WebViewActivity
 import ca.judacribz.zooatlanta.homepage.viewmodel.HomePageViewModel
@@ -24,11 +24,11 @@ class HomePageActivity : BaseActivity() {
     }
 
     fun goToCategories(@Suppress("UNUSED_PARAMETER") view: View?) {
-        startActivity(Intent(this, Categories::class.java))
+        startActivity(Intent(this, CategoriesActivity::class.java))
     }
 
     fun goToAnimals(@Suppress("UNUSED_PARAMETER") view: View?) {
-        startActivity(Intent(this, Animals::class.java))
+        startActivity(Intent(this, AnimalsActivity::class.java))
     }
 
     private fun setUpObservers() {

@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:background="@android:color/black" />
 
-    <ca.judacribz.zooatlanta.homepage.view.custom.AnimalPosts
+    <ca.judacribz.zooatlanta.homepage.view.custom.AnimalPostsView
         android:id="@+id/apHomepageCustom"
         android:layout_height="@dimen/constraint_zero"
         android:layout_width="match_parent"

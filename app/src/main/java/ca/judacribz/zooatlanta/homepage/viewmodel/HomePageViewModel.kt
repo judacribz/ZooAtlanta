@@ -5,11 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ca.judacribz.zooatlanta.global.common.constants.ATTR_STYLE
-import ca.judacribz.zooatlanta.global.common.constants.CLASS_HERO_IMAGE
-import ca.judacribz.zooatlanta.global.common.constants.CLASS_SLIDE
 import ca.judacribz.zooatlanta.global.common.constants.TAG_H2
 import ca.judacribz.zooatlanta.global.common.constants.TAG_P
-import ca.judacribz.zooatlanta.global.common.constants.ZOO_ATLANTA_URL
+import ca.judacribz.zooatlanta.global.common.constants.URL_ZOO_ATLANTA
 import ca.judacribz.zooatlanta.global.common.util.extractImageUrl
 import ca.judacribz.zooatlanta.global.common.util.getFirstATagUrl
 import ca.judacribz.zooatlanta.global.common.util.getFirstElementByClass
@@ -24,6 +22,10 @@ import org.jsoup.nodes.Document
 class HomePageViewModel : ViewModel() {
     companion object {
         private const val DURATION_IMAGE_CHANGE: Long = 2000
+
+        // To retrieve homepage images and text
+        private const val CLASS_SLIDE = "slide"
+        private const val CLASS_HERO_IMAGE = "hero-image"
     }
 
     private val _post = MutableLiveData<BasePost>()
@@ -38,7 +40,7 @@ class HomePageViewModel : ViewModel() {
         }
 
     fun pullData() = viewModelScope.launch(Dispatchers.IO) {
-        val zooDocument = Jsoup.connect(ZOO_ATLANTA_URL).get() ?: return@launch
+        val zooDocument = Jsoup.connect(URL_ZOO_ATLANTA).get() ?: return@launch
         retrieveMainImages(zooDocument)
     }
 
