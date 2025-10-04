@@ -1,38 +1,9 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Zoo Atlanta</string>
-    <string name="number_of_species_here">Number of Species Here:</string>
-    <string name="description">Description</string>
-    <string name="view_schedule">VIEW SCHEDULE</string>
-    <string name="today">Today</string>
-    <string name="animals">Animals</string>
-    <string name="categories">Categories</string>
-
-    <string name="gorilla">KEEP YOUR EYES PEELED FOR THE TINIEST MEMBER OF TAZ\'S GORILLA GROUP!</string>
-    <string name="panda">HERE\'S A STORY \.\.\. OF A LOVELY PANDA \.\.\. WHO GAVE BIRTH TO MANY TEENY-TINY CUBS!</string>
-    <string name="elephant">JOIN THE HERD TO TAKE A STAND FOR EARTH\'S LARGEST LIVING MAMMALS.</string>
-    <string name="zebra">THE ALL-NEW AFRICAN SAVANNA IS OPENING AUGUST 8!</string>
-
-    <string name="gorilla_desc">Lulu gave birth to her second offspring (and Taz’s 11th!) on July 24.</string>
-    <string name="panda_desc">Don’t miss out on our limited-time 2019 giant panda shirt featuring “The Panda Bunch.”</string>
-    <string name="elephant_desc">Discover why elephants are so important to their ecosystem, and find out how we can mitigate the threats they face.</string>
-    <string name="zebra_desc">This historic transformation will include new and significantly expanded habitats for elephants, giraffes, zebras and more.</string>
-
-    <string name="tickets">Tickets</string>
-    <string name="learn_more">Learn More</string>
-    <string name="cnt_featured_animals">Featured Animals</string>
-    <string name="cnt_zoo_atlanta_banner">Zoo Atlanta Banner</string>
-    <string name="animal_classifications">Animal Classifications</string>
-    <string name="cnt_photo_of_animal">Photo of Animal</string>
-    <string name="diet">Diet</string>
-    <string name="status">Status</string>
-    <string name="range">Range</string>
-    <string name="scientific_name">Scientific Name</string>
-    <string name="viewing_hints">Viewing Hints</string>
-    <string name="habitat">Habitat</string>
-    <string name="cnt_sound_image">Sound Image</string>
-    <string name="category_file">category_file</string>
-    <string name="forward">forward</string>
-    <string name="cnt_zoo_atlanta_logo">Zoo Atlanta Logo</string>
-
-    <string name="searching_for_network" tools:ignore="TypographyEllipsis">Searching for Network...</string>
+    <string name="category_all">All Animals</string>
+    <string name="label_diet">Diet</string>
+    <string name="label_status">Status in the wild</string>
+    <string name="label_range">Range</string>
+    <string name="label_no_image">Image unavailable</string>
+    <string name="action_retry">Try again</string>
 </resources>
